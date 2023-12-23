@@ -1,7 +1,8 @@
-package br.com.luiz.smktsystem.model;
+package br.com.luiz.smktsystem.app.model;
 
-import br.com.luiz.smktsystem.model.enums.Category;
-import jakarta.persistence.Id;
+import javax.persistence.Id;
+
+import br.com.luiz.smktsystem.app.enums.Category;
 
 public class Product {
     

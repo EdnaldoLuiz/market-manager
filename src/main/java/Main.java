@@ -1,24 +1,27 @@
-import br.com.luiz.smktsystem.model.User;
+import br.com.luiz.smktsystem.app.model.Employeer;
+import br.com.luiz.smktsystem.service.dto.EmployeerRegisterDTO;
+import br.com.luiz.smktsystem.service.impl.EmployeerMapper;
 import br.com.luiz.smktsystem.utils.JpaUtil;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 public class Main {
     public static void main(String[] args) {
         EntityManager entityManager = JpaUtil.getEntityManager();
 
-        // Exemplo de persistência
-        User user = new User();
-        user.setId(2L);
-        user.setEmail("emailTeste@gmail.com");
-        user.setName("usuarioTeste");
-        user.setPassword("senhaTeste");
+        EmployeerRegisterDTO registerDTO = new EmployeerRegisterDTO();
+        registerDTO.setCpf("12345678910");
+        registerDTO.setEmail("emailTeste@gmail.com");
+        registerDTO.setName("usuarioTeste");
+        registerDTO.setPassword("senhaTeste");
+
+        Employeer employeer = EmployeerMapper.INSTANCE.mapDtoToEntity(registerDTO);
 
         EntityTransaction transaction = entityManager.getTransaction();
 
         try {
             transaction.begin();
-            entityManager.persist(user);
+            entityManager.persist(employeer);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {

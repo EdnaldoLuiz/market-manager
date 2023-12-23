@@ -1,4 +1,4 @@
-package br.com.luiz.smktsystem.model.enums;
+package br.com.luiz.smktsystem.app.enums;
 
 public enum Payment {
     
