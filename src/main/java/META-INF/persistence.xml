@@ -1,24 +1,20 @@
-<persistence
-    xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
-             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
- version="2.1">
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+        http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+    version="2.1">
+    
     <persistence-unit name="PERSISTENCE">
-        <description> Hibernate JPA Configuration Example</description>
+        <description>Hibernate JPA Configuration Example</description>
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>src.Student</class>
 
         <properties>
-            <property name="jakarta.persistence.jdbc.driver"
-    value="com.mysql.cj.jdbc.Driver" />
-            <property name="jakarta.persistence.jdbc.url"
-    value="jdbc:mysql://localhost:3306/JPA_Udemy" />
-            <property name="jakarta.persistence.jdbc.user" value="root" />
-            <property name="jakarta.persistence.jdbc.password"
-    value="06022003eln68" />
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5433/supermarket" />
+            <property name="javax.persistence.jdbc.user" value="postgres" />
+            <property name="javax.persistence.jdbc.password" value="06022003" />
 
-            <property name="hibernate.dialect.MySQL57Dialect" value="true" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
             <property name="hibernate.format_sql" value="true" />
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.hbm2ddl.auto" value="update" />
