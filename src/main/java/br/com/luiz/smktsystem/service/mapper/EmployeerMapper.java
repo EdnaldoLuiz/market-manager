@@ -1,4 +1,4 @@
-package br.com.luiz.smktsystem.service.impl;
+package br.com.luiz.smktsystem.service.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

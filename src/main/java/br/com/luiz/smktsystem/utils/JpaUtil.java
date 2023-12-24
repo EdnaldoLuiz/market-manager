@@ -5,21 +5,21 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class JpaUtil {
-  private static final String PERSISTENCE_UNIT_NAME = "PERSISTENCE";
 
-  private static EntityManagerFactory factory;
+    private static final EntityManagerFactory emFactory;
 
-  static {
-    factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-  }
-
-  public static EntityManager getEntityManager() {
-    return factory.createEntityManager();
-  }
-
-  public static void close() {
-    if (factory != null && factory.isOpen()) {
-      factory.close();
+    static {
+        emFactory = Persistence.createEntityManagerFactory("PERSISTENCE");
     }
-  }
+
+    public static EntityManager getEntityManager() {
+        return emFactory.createEntityManager();
+    }
+
+    public static void close() {
+        if (emFactory != null && emFactory.isOpen()) {
+            emFactory.close();
+        }
+    }
 }
+
