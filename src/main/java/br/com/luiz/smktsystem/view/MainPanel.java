@@ -14,7 +14,15 @@ public class MainPanel extends JPanel {
         setLayout(new BorderLayout());
 
         add(new HeaderComponent(), BorderLayout.NORTH);
+        add(createSidebar(), BorderLayout.WEST);
         add(new ContentPanel(), BorderLayout.CENTER);
         add(new FooterComponent(), BorderLayout.SOUTH);
+    }
+
+    private JPanel createSidebar() {
+        JPanel sidebar = new JPanel();
+        sidebar.setBackground(Color.RED);
+        sidebar.setPreferredSize(new Dimension(300, getHeight()));
+        return sidebar;
     }
 }

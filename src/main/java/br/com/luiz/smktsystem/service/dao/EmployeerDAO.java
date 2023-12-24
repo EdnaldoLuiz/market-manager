@@ -2,6 +2,7 @@ package br.com.luiz.smktsystem.service.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 
 import br.com.luiz.smktsystem.app.model.Employeer;
 
@@ -24,6 +25,18 @@ public class EmployeerDAO {
                 transaction.rollback();
             }
             e.printStackTrace();
+        }
+    }
+
+    public Employeer findEmployeerByEmail(String email) {
+        try {
+            String jpql = "SELECT e FROM Employeer e WHERE e.email = :email";
+            Query query = entityManager.createQuery(jpql, Employeer.class);
+            query.setParameter("email", email);
+            return (Employeer) query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
