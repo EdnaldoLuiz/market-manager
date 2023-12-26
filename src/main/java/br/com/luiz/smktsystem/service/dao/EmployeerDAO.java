@@ -39,4 +39,17 @@ public class EmployeerDAO {
             return null;
         }
     }
+
+    public boolean isEmailExists(String email) {
+        try {
+            String jpql = "SELECT COUNT(e) FROM Employeer e WHERE e.email = :email";
+            Query query = entityManager.createQuery(jpql);
+            query.setParameter("email", email);
+            Long count = (Long) query.getSingleResult();
+            return count > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

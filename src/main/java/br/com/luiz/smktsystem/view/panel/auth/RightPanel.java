@@ -10,6 +10,10 @@ import br.com.luiz.smktsystem.view.panel.ResetPasswordPanel;
 public class RightPanel extends JPanel {
 
     public RightPanel() {
+        initComponents();
+    }
+
+    private void initComponents() {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -86,7 +90,7 @@ public class RightPanel extends JPanel {
 
     private void openResetPasswordView() {
         JFrame resetPasswordFrame = new JFrame();
-        resetPasswordFrame.setSize(500, 300);
+        resetPasswordFrame.setSize(500, 450);
         resetPasswordFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         resetPasswordFrame.setLocationRelativeTo(null);
         resetPasswordFrame.add(new ResetPasswordPanel());
