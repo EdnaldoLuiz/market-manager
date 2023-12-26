@@ -1,11 +1,17 @@
 package br.com.luiz.smktsystem.view.panel;
 
 import javax.swing.*;
+
+import br.com.luiz.smktsystem.service.EmployeerService;
+
 import java.awt.*;
 
 public class ResetPasswordPanel extends JPanel {
 
-    public ResetPasswordPanel() {
+    private EmployeerService employeerService;
+
+    public ResetPasswordPanel(EmployeerService employeerService) {
+        this.employeerService = employeerService;
         initComponents();
     }
 
@@ -67,6 +73,16 @@ public class ResetPasswordPanel extends JPanel {
         submitButton.setPreferredSize(new Dimension(220, 40));
         submitButton.setFont(new Font("Arial", Font.BOLD, 20));
         submitButton.addActionListener(e -> submitAction());
+
+        submitButton.addActionListener(e -> {
+            String email = emailField.getText();
+
+            if (employeerService.isEmailOnDatabase(email)) {
+                System.out.println("Email existe. Verificar senha ou outras ações.");
+            } else {
+                System.out.println("Email não cadastrado. Insira um email válido.");
+            }
+        });
 
         add(submitButton, gbc);
     }
