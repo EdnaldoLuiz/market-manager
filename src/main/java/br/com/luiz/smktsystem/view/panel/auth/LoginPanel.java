@@ -1,23 +1,19 @@
-package br.com.luiz.smktsystem.view;
+package br.com.luiz.smktsystem.view.panel.auth;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.persistence.EntityManager;
 import javax.swing.*;
-import javax.swing.text.html.parser.Entity;
 
 import br.com.luiz.smktsystem.service.EmployeerService;
-import br.com.luiz.smktsystem.service.dao.EmployeerDAO;
-import br.com.luiz.smktsystem.utils.JpaUtil;
-import br.com.luiz.smktsystem.view.panel.ResetPasswordPanel;
+import br.com.luiz.smktsystem.view.panel.main.MainPanel;
 
-public class LoginView extends JFrame {
+public class LoginPanel extends JFrame {
 
-    private EmployeerService employeerService; // Certifique-se de ter uma instância válida aqui
+    private EmployeerService employeerService;
 
-    public LoginView(EmployeerService employeerService) {
+    public LoginPanel(EmployeerService employeerService) {
         this.employeerService = employeerService;
         initComponents();
     }
@@ -29,12 +25,10 @@ public class LoginView extends JFrame {
 
         setLayout(new BorderLayout());
 
-        // LeftPanel
         JPanel leftPanel = new JPanel();
         leftPanel.setBackground(Color.RED);
         leftPanel.setPreferredSize(new Dimension(450, leftPanel.getHeight()));
 
-        // RightPanel
         JPanel rightPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -122,12 +116,4 @@ public class LoginView extends JFrame {
         resetPasswordFrame.add(new ResetPasswordPanel(employeerService));
         resetPasswordFrame.setVisible(true);
     }
-
-    public static void main(String[] args) {
-        EntityManager entityManager = JpaUtil.getEntityManager();
-        EmployeerDAO employeerDAO = new EmployeerDAO(entityManager);
-        EmployeerService employeerService = new EmployeerService(employeerDAO);
-        SwingUtilities.invokeLater(() -> new LoginView(employeerService));
-    }
-
 }

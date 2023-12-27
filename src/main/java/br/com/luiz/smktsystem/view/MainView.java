@@ -2,6 +2,8 @@ package br.com.luiz.smktsystem.view;
 
 import javax.swing.*;
 
+import br.com.luiz.smktsystem.view.panel.main.MainPanel;
+
 public class MainView extends JFrame {
 
     public MainView() {

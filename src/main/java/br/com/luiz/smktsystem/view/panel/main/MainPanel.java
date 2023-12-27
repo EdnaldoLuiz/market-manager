@@ -1,8 +1,8 @@
-package br.com.luiz.smktsystem.view;
+package br.com.luiz.smktsystem.view.panel.main;
 
 import javax.swing.*;
 
-import br.com.luiz.smktsystem.view.component.ContentPanel;
+import br.com.luiz.smktsystem.view.component.ContentComponent;
 import br.com.luiz.smktsystem.view.component.FooterComponent;
 import br.com.luiz.smktsystem.view.component.HeaderComponent;
 
@@ -15,7 +15,7 @@ public class MainPanel extends JPanel {
 
         add(new HeaderComponent(), BorderLayout.NORTH);
         add(createSidebar(), BorderLayout.WEST);
-        add(new ContentPanel(), BorderLayout.CENTER);
+        add(new ContentComponent(), BorderLayout.CENTER);
         add(new FooterComponent(), BorderLayout.SOUTH);
     }
 
