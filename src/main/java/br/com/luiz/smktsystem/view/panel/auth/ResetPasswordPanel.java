@@ -2,6 +2,8 @@ package br.com.luiz.smktsystem.view.panel.auth;
 
 import javax.swing.*;
 import br.com.luiz.smktsystem.service.EmployeerService;
+import br.com.luiz.smktsystem.view.modal.ResetPasswordModal;
+
 import java.awt.*;
 
 public class ResetPasswordPanel extends JPanel {
@@ -76,46 +78,17 @@ public class ResetPasswordPanel extends JPanel {
 
     private void submitAction(String email) {
         if (employeerService.isEmailOnDatabase(email)) {
-            showSuccessDialog();
+            ResetPasswordModal.showSuccessDialog(this);
         } else {
-            showErrorDialog();
+            ResetPasswordModal.showErrorDialog(this);
         }
     }
 
-    private void showSuccessDialog() {
-        ImageIcon successIcon = createResizedIcon("src/main/resources/icons/success.png", 50, 50);
-        JLabel iconLabel = new JLabel(successIcon);
-        JTextArea textArea = new JTextArea("Um código para redefinição de senha será enviado.\nVerifique sua caixa de e-mail.");
-        textArea.setEditable(false);
-        textArea.setWrapStyleWord(true);
-        textArea.setLineWrap(true);
-
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.add(iconLabel, BorderLayout.CENTER);
-        panel.add(textArea, BorderLayout.SOUTH);
-
-        JOptionPane.showMessageDialog(this, panel, null, JOptionPane.PLAIN_MESSAGE);
-    }
-
-    private void showErrorDialog() {
-        ImageIcon errorIcon = createResizedIcon("src/main/resources/icons/error.png", 50, 50);
-        JLabel iconLabel = new JLabel(errorIcon);
-        JTextArea textArea = new JTextArea("E-mail não cadastrado. Insira um e-mail válido.");
-        textArea.setEditable(false);
-        textArea.setWrapStyleWord(true);
-        textArea.setLineWrap(true);
-
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.add(iconLabel, BorderLayout.CENTER);
-        panel.add(textArea, BorderLayout.SOUTH);
-
-        JOptionPane.showMessageDialog(this, panel, null, JOptionPane.PLAIN_MESSAGE);
-    }
-
-    private ImageIcon createResizedIcon(String path, int width, int height) {
+    private static ImageIcon createResizedIcon(String path, int width, int height) {
         ImageIcon originalIcon = new ImageIcon(path);
         Image originalImage = originalIcon.getImage();
         Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return new ImageIcon(scaledImage);
     }
+
 }
