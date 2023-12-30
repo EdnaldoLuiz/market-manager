@@ -6,7 +6,7 @@ import br.com.luiz.smktsystem.service.dto.EmployeerLoginDTO;
 import br.com.luiz.smktsystem.service.dto.EmployeerRegisterDTO;
 import br.com.luiz.smktsystem.service.mapper.EmployeerMapper;
 
-public class EmployeerService implements PasswordService {
+public class EmployeerService {
 
     private EmployeerDAO employeerDAO;
 
@@ -29,7 +29,6 @@ public class EmployeerService implements PasswordService {
         return null;
     }
 
-    @Override
     public boolean isEmailOnDatabase(String email) {
         return employeerDAO.isEmailExists(email);
     }

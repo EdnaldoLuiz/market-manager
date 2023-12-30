@@ -5,6 +5,11 @@ public class EmployeerLoginDTO {
     private String email;
     private String password;
 
+    public EmployeerLoginDTO(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public String getEmail() {
         return email;
     }

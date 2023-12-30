@@ -3,7 +3,7 @@ package br.com.luiz.smktsystem.view.panel.auth;
 import javax.swing.*;
 import br.com.luiz.smktsystem.service.EmployeerService;
 import br.com.luiz.smktsystem.utils.javax.icon.ResizeIcon;
-import br.com.luiz.smktsystem.view.modal.ResetPasswordModal;
+import br.com.luiz.smktsystem.view.shared.modal.Modal;
 
 import java.awt.*;
 
@@ -83,9 +83,9 @@ public class ResetPasswordPanel extends JPanel {
 
     private void submitAction(String email) {
         if (employeerService.isEmailOnDatabase(email)) {
-            ResetPasswordModal.showSuccessDialog(this);
+            Modal.showSuccessDialog(this);
         } else {
-            ResetPasswordModal.showErrorDialog(this);
+            Modal.showErrorDialog(this, "O e-mail informado ainda não foi cadastrado.");
         }
     }
 }
