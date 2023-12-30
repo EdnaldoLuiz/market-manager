@@ -1,16 +1,24 @@
 package br.com.luiz.smktsystem.view.modal;
 
 import javax.swing.*;
+
+import br.com.luiz.smktsystem.utils.javax.color.CustomColor;
+import br.com.luiz.smktsystem.utils.javax.icon.ResizeIcon;
+
 import java.awt.*;
 
 public class ResetPasswordModal {
+
+    private static ImageIcon createResizedIcon(String path, int width, int height) {
+        return ResizeIcon.createResizedIcon(path, width, height);
+    }
 
     public static void showSuccessDialog(Component parentComponent) {
         ImageIcon successIcon = createResizedIcon("src/main/resources/icons/success.png", 100, 100);
         JLabel iconLabel = new JLabel(successIcon);
         JTextArea textArea = new JTextArea("Um código para redefinição de senha será enviado. Verifique sua caixa de e-mail.");
         customizeDialog(textArea);
-        showCustomDialog(parentComponent, iconLabel, textArea, Color.GREEN);
+        showCustomDialog(parentComponent, iconLabel, textArea, CustomColor.SUCESS_GREEN);
     }
 
     public static void showErrorDialog(Component parentComponent) {
@@ -63,12 +71,5 @@ public class ResetPasswordModal {
                 options,
                 options[0]
         );
-    }
-
-    private static ImageIcon createResizedIcon(String path, int width, int height) {
-        ImageIcon originalIcon = new ImageIcon(path);
-        Image originalImage = originalIcon.getImage();
-        Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        return new ImageIcon(scaledImage);
     }
 }

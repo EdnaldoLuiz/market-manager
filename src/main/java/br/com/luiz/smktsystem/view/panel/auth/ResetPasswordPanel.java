@@ -2,6 +2,7 @@ package br.com.luiz.smktsystem.view.panel.auth;
 
 import javax.swing.*;
 import br.com.luiz.smktsystem.service.EmployeerService;
+import br.com.luiz.smktsystem.utils.javax.icon.ResizeIcon;
 import br.com.luiz.smktsystem.view.modal.ResetPasswordModal;
 
 import java.awt.*;
@@ -13,6 +14,10 @@ public class ResetPasswordPanel extends JPanel {
     public ResetPasswordPanel(EmployeerService employeerService) {
         this.employeerService = employeerService;
         initComponents();
+    }
+
+    private static ImageIcon createResizedIcon(String path, int width, int height) {
+        return ResizeIcon.createResizedIcon(path, width, height);
     }
 
     private void initComponents() {
@@ -83,12 +88,4 @@ public class ResetPasswordPanel extends JPanel {
             ResetPasswordModal.showErrorDialog(this);
         }
     }
-
-    private static ImageIcon createResizedIcon(String path, int width, int height) {
-        ImageIcon originalIcon = new ImageIcon(path);
-        Image originalImage = originalIcon.getImage();
-        Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        return new ImageIcon(scaledImage);
-    }
-
 }

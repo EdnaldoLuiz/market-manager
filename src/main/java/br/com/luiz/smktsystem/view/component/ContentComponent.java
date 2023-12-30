@@ -1,8 +1,8 @@
 package br.com.luiz.smktsystem.view.component;
 
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-public class ContentComponent extends JFrame {
+public class ContentComponent extends JPanel {
     
     public ContentComponent() {
     }

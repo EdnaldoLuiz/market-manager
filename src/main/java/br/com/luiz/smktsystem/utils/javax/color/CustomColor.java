@@ -5,5 +5,6 @@ import java.awt.Color;
 public class CustomColor {
 
     public static final Color MAIN_RED = new Color(165, 39, 39);
+    public static final Color SUCESS_GREEN = new Color(39, 165, 39);
     
 }
