@@ -9,6 +9,7 @@ import javax.swing.*;
 import br.com.luiz.smktsystem.service.AuthenticationListener;
 import br.com.luiz.smktsystem.service.AuthenticationManager;
 import br.com.luiz.smktsystem.service.EmployeerService;
+import br.com.luiz.smktsystem.utils.javax.icon.ResizeIcon;
 import br.com.luiz.smktsystem.view.panel.main.MainPanel;
 import br.com.luiz.smktsystem.view.shared.modal.Modal;
 
@@ -53,24 +54,32 @@ public class LoginPanel extends JFrame implements AuthenticationListener {
         JPanel rightPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.anchor = GridBagConstraints.WEST;
+        gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(5, 5, 5, 5);
-
+    
         Font labelFont = new Font("Arial", Font.BOLD, 18);
         Font inputFont = new Font("Arial", Font.PLAIN, 16);
-
+    
+        ImageIcon loginIcon = ResizeIcon.createResizedIcon("src/main/resources/icons/login.png", 150, 150);
+        JLabel iconLabel = new JLabel(loginIcon);
+    
+        gbc.gridy++;
+        gbc.insets = new Insets(-40, 5, 5, 5);
+        rightPanel.add(iconLabel, gbc);
+    
         JLabel emailLabel = createLabel("Email:", labelFont);
         emailField = createTextField(20, inputFont);
-
+    
         JLabel passwordLabel = createLabel("Senha:", labelFont);
         passwordField = createPasswordField(20, inputFont);
-
+    
         JButton loginButton = createLoginButton();
-
+    
         JLabel forgotPasswordLabel = createForgotPasswordLabel(inputFont);
-
+    
         gbc.gridy++;
         gbc.insets = new Insets(10, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.WEST; 
         rightPanel.add(emailLabel, gbc);
         gbc.gridy++;
         rightPanel.add(emailField, gbc);
@@ -79,20 +88,22 @@ public class LoginPanel extends JFrame implements AuthenticationListener {
         gbc.gridy++;
         rightPanel.add(passwordField, gbc);
         gbc.gridy++;
-
+    
         gbc.anchor = GridBagConstraints.EAST;
         gbc.gridwidth = 2;
         rightPanel.add(forgotPasswordLabel, gbc);
-
+    
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.gridwidth = 1;
-
+    
         gbc.gridy++;
         gbc.insets = new Insets(20, 5, 5, 5);
         rightPanel.add(loginButton, gbc);
-
+    
         return rightPanel;
     }
+    
+    
 
     private JLabel createLabel(String text, Font font) {
         JLabel label = new JLabel(text);
