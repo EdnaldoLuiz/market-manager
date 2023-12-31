@@ -103,8 +103,6 @@ public class LoginPanel extends JFrame implements AuthenticationListener {
         return rightPanel;
     }
     
-    
-
     private JLabel createLabel(String text, Font font) {
         JLabel label = new JLabel(text);
         label.setFont(font);
@@ -159,6 +157,7 @@ public class LoginPanel extends JFrame implements AuthenticationListener {
 
     @Override
     public void onAuthenticationSuccess() {
+        dispose();
         JFrame mainFrame = new JFrame();
         mainFrame.setSize(1300, 900);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

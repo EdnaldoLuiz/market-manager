@@ -11,13 +11,13 @@ public class FooterComponent extends JPanel {
 
     public FooterComponent() {
         setPreferredSize(new Dimension(getWidth(), 50));
-        setBackground(CustomColor.MAIN_RED);
+        setBackground(CustomColor.MAIN_RED); 
 
-        JLabel label = new JLabel("© 2024 Copyright - Ednaldo Luiz");
+        JLabel label = new JLabel("© 2024 Copyright - SmktSystem. Todos os direitos reservados.");
         label.setForeground(Color.WHITE);
 
-        label.setBorder(new EmptyBorder(10, 0, 0, 0));
-
+        label.setBorder(new EmptyBorder(10, 10, 10, 10));
         add(label);
     }
+    // test@gmail.com
 }

@@ -10,6 +10,6 @@ public class SidebarComponent extends JPanel {
     
     public SidebarComponent() {
         setBackground(Color.RED);
-        setPreferredSize(new Dimension(300, getHeight()));
+        setPreferredSize(new Dimension(250, getHeight()));
     }
 }
