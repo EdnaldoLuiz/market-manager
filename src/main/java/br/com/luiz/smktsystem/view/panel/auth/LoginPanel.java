@@ -6,9 +6,9 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 
-import br.com.luiz.smktsystem.service.AuthenticationListener;
-import br.com.luiz.smktsystem.service.AuthenticationManager;
 import br.com.luiz.smktsystem.service.EmployeerService;
+import br.com.luiz.smktsystem.service.dao.AuthenticationListener;
+import br.com.luiz.smktsystem.service.dao.AuthenticationManager;
 import br.com.luiz.smktsystem.utils.javax.icon.ResizeIcon;
 import br.com.luiz.smktsystem.view.panel.main.MainPanel;
 import br.com.luiz.smktsystem.view.shared.modal.Modal;
@@ -44,18 +44,24 @@ public class LoginPanel extends JFrame implements AuthenticationListener {
     }
 
     private JPanel buildLeftPanel() {
-        JPanel leftPanel = new JPanel();
-        leftPanel.setBackground(Color.RED);
-        leftPanel.setPreferredSize(new Dimension(450, leftPanel.getHeight()));
+        JPanel leftPanel = new JPanel(new BorderLayout());
+        ImageIcon backgroundIcon = ResizeIcon.createResizedIcon("src/main/resources/imgs/auth-logo.jpg", 450, 600);
+        JLabel backgroundLabel = new JLabel(backgroundIcon);
+    
+        leftPanel.add(backgroundLabel, BorderLayout.CENTER);
+    
         return leftPanel;
     }
+    
 
     private JPanel buildRightPanel() {
+        
         JPanel rightPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(5, 5, 5, 5);
+        
     
         Font labelFont = new Font("Arial", Font.BOLD, 18);
         Font inputFont = new Font("Arial", Font.PLAIN, 16);

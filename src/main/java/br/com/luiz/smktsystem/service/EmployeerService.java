@@ -15,7 +15,7 @@ public class EmployeerService {
     }
 
     public void registerEmployeer(EmployeerRegisterDTO registerDTO) {
-        Employeer employeer = EmployeerMapper.INSTANCE.registerToToEntity(registerDTO);
+        Employeer employeer = EmployeerMapper.INSTANCE.registerToEntity(registerDTO);
         employeerDAO.createEmployeer(employeer);
     }
 

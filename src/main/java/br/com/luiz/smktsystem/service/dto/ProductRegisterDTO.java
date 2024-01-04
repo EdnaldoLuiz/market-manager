@@ -1,45 +1,14 @@
-package br.com.luiz.smktsystem.app.model;
-
-import java.util.UUID;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+package br.com.luiz.smktsystem.service.dto;
 
 import br.com.luiz.smktsystem.app.enums.Category;
 
-@Entity
-public class Product {
-    
-    @Id
-    @GeneratedValue(generator = "UUID")
-    private UUID id;
+public class ProductRegisterDTO {
+
     private String productName;
     private Double productPrice;
     private Integer productQuantity;
     private Category category;
-
-    @Lob
     private byte[] image;
-
-    public Product() {}
-
-    public Product(String productName, Double productPrice, Integer productQuantity, Category category, byte[] image) {
-        this.productName = productName;
-        this.productPrice = productPrice;
-        this.productQuantity = productQuantity;
-        this.category = category;
-        this.image = image;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-    
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public String getProductName() {
         return productName;
@@ -80,5 +49,4 @@ public class Product {
     public void setImage(byte[] image) {
         this.image = image;
     }
-
 }

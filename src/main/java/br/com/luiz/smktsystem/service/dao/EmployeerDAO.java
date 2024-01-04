@@ -7,6 +7,7 @@ import javax.persistence.Query;
 import br.com.luiz.smktsystem.app.model.Employeer;
 
 public class EmployeerDAO {
+    
     private EntityManager entityManager;
 
     public EmployeerDAO(EntityManager entityManager) {

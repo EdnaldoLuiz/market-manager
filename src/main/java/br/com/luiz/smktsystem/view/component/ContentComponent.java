@@ -1,56 +1,84 @@
 package br.com.luiz.smktsystem.view.component;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-
-import br.com.luiz.smktsystem.utils.javax.icon.ResizeIcon;
-
+import javax.swing.border.Border;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
+import br.com.luiz.smktsystem.app.enums.Category;
+import br.com.luiz.smktsystem.service.ProductService;
+import br.com.luiz.smktsystem.service.dto.ProductRegisterDTO;
+import br.com.luiz.smktsystem.utils.AddProductButton;
+import br.com.luiz.smktsystem.utils.ProductCard;
+import br.com.luiz.smktsystem.utils.javax.color.CustomColor;
 
 public class ContentComponent extends JPanel {
 
-    public ContentComponent() {
-        setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10)); 
+    private ProductService productService;
 
-        JPanel mainContainer = new JPanel();
-        mainContainer.setLayout(new GridLayout(0, 3, 10, 10)); 
-        mainContainer.setBackground(Color.lightGray);
+    public ContentComponent(ProductService productService) {
+        this.productService = productService;
 
-        for (int i = 1; i <= 20; i++) {
-            JPanel card = createCard("Card " + i, "", 0.0, () -> "src/main/resources/imgs/products/pao.jpg");
-            mainContainer.add(card);
-        }
+        setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10)); // Usando FlowLayout
+        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JScrollPane scrollPane = new JScrollPane(mainContainer);
-        scrollPane.setPreferredSize(new Dimension(650, 470));
-        add(scrollPane);
+        add(createEmptyArea("Wide Area", 990, 450));
+        add(createEmptyArea("Standard Area", 650, 200));
+        add(createEmptyArea("Narrow Area", 330, 200));
     }
 
-    private JPanel createCard(String productName, String description, double price, ImageProvider imageProvider) {
-        JPanel card = new JPanel();
-        card.setPreferredSize(new Dimension(200, 250)); 
-        card.setBackground(Color.white);
-        card.setLayout(new BorderLayout());
+    private JPanel createEmptyArea(String areaName, int width, int height) {
+        JPanel area = new JPanel();
+        area.setPreferredSize(new Dimension(width, height));
+        Border redBorder = BorderFactory.createLineBorder(Color.RED, 2);
+        area.setBorder(BorderFactory.createTitledBorder(redBorder, areaName));
+        return area;
+    }
 
-        ImageIcon productImage = ResizeIcon.createResizedIcon(imageProvider.getImagePath(), 200, 150);
-        JLabel imageLabel = new JLabel(productImage);
-        card.add(imageLabel, BorderLayout.CENTER);
+    private void showAddProductDialog() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Escolha uma imagem");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Imagens", "jpg", "jpeg", "png", "gif"));
 
-        JPanel infoPanel = new JPanel(new GridLayout(3, 1));
-        JLabel nameLabel = new JLabel(productName);
-        JLabel descriptionLabel = new JLabel(description);
-        JLabel priceLabel = new JLabel(String.format("R$ %.2f", price));
+        int userSelection = fileChooser.showOpenDialog(this);
 
-        nameLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        priceLabel.setForeground(Color.BLUE);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
 
-        infoPanel.add(nameLabel);
-        infoPanel.add(descriptionLabel);
-        infoPanel.add(priceLabel);
+            try {
+                byte[] imageBytes = Files.readAllBytes(selectedFile.toPath());
 
-        card.add(infoPanel, BorderLayout.SOUTH);
+                String productName = JOptionPane.showInputDialog(this, "Nome do Produto:");
+                String priceStr = JOptionPane.showInputDialog(this, "Preço do Produto:");
+                String quantityStr = JOptionPane.showInputDialog(this, "Quantidade do Produto:");
 
-        return card;
+                try {
+                    double price = Double.parseDouble(priceStr);
+                    int quantity = Integer.parseInt(quantityStr);
+
+                    ProductRegisterDTO registerDTO = new ProductRegisterDTO();
+                    registerDTO.setProductName(productName);
+                    registerDTO.setProductPrice(price);
+                    registerDTO.setProductQuantity(quantity);
+                    registerDTO.setCategory(Category.FOOD);
+                    registerDTO.setImage(imageBytes);
+
+                    productService.registerProduct(registerDTO);
+                    updateView();
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Por favor, insira valores válidos para preço e quantidade.");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void updateView() {
     }
 
     public interface ImageProvider {

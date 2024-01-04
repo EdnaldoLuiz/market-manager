@@ -1,6 +1,7 @@
-package br.com.luiz.smktsystem.service;
+package br.com.luiz.smktsystem.service.dao;
 
 import br.com.luiz.smktsystem.app.model.Employeer;
+import br.com.luiz.smktsystem.service.EmployeerService;
 import br.com.luiz.smktsystem.service.dto.EmployeerLoginDTO;
 
 public class AuthenticationManager {

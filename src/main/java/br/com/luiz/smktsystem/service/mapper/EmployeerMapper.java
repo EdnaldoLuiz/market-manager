@@ -14,7 +14,7 @@ public interface EmployeerMapper {
     EmployeerMapper INSTANCE = Mappers.getMapper(EmployeerMapper.class);
 
     @Mapping(target = "id", ignore = true) 
-    Employeer registerToToEntity(EmployeerRegisterDTO dto);
+    Employeer registerToEntity(EmployeerRegisterDTO dto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "cpf", ignore = true)
