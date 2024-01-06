@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
+import org.hibernate.annotations.Type;
+
 import br.com.luiz.smktsystem.app.enums.Category;
 
 @Entity
@@ -21,12 +23,13 @@ public class Product {
     private Integer productQuantity;
     private Category category;
 
-    @Column(length = 100000, columnDefinition = "TEXT")
-    private String image;
+    @Lob
+    @Type(type="org.hibernate.type.BinaryType")
+    private byte[] image;
 
     public Product() {}
 
-    public Product(String productName, Double productPrice, Integer productQuantity, Category category, String image) {
+    public Product(String productName, Double productPrice, Integer productQuantity, Category category, byte[] image) {
         this.productName = productName;
         this.productPrice = productPrice;
         this.productQuantity = productQuantity;
@@ -74,12 +77,11 @@ public class Product {
         this.category = category;
     }
 
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
-
 }

@@ -7,12 +7,11 @@ import java.util.Base64;
 
 public class ImageByteUtil {
 
-    public static String encode(String imagePath) throws IOException {
-        byte[] imageBytes = Files.readAllBytes(Paths.get(imagePath));
-        return Base64.getEncoder().encodeToString(imageBytes);
+    public static byte[] encode(String imagePath) throws IOException {
+        return Files.readAllBytes(Paths.get(imagePath));
     }
 
-    public static byte[] decode(String base64Image) {
-        return Base64.getDecoder().decode(base64Image);
+    public static String decode(byte[] imageBytes) {
+        return Base64.getEncoder().encodeToString(imageBytes);
     }
 }

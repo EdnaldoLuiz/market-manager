@@ -50,13 +50,12 @@ public class ContentComponent extends JPanel {
         for (Product product : products) {
             ProductRegisterDTO productDTO = ProductMapper.INSTANCE.entityToRegisterDTO(product);
 
-            byte[] imageBytes = ImageByteUtil.decode(productDTO.getImage());
             wideArea.add(new ProductCard(
-                    productDTO.getProductName(),
-                    productDTO.getCategory().toString(),
-                    productDTO.getProductPrice(),
-                    imageBytes
-            ));
+                productDTO.getProductName(),
+                productDTO.getCategory().toString(),
+                productDTO.getProductPrice(),
+                productDTO.getImage()
+        ));
         }
 
         return wideArea;
@@ -88,7 +87,7 @@ public class ContentComponent extends JPanel {
             if (userSelection == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
 
-                String imageBase64 = ImageByteUtil.encode(selectedFile.getAbsolutePath());
+                byte[] imageBytes = ImageByteUtil.encode(selectedFile.getAbsolutePath());
 
                 EntityManager entityManager = JpaUtil.getEntityManager();
                 ProductDAO productDAO = new ProductDAO(entityManager);
@@ -99,7 +98,7 @@ public class ContentComponent extends JPanel {
                 registerDTO.setProductPrice(price);
                 registerDTO.setProductQuantity(quantity);
                 registerDTO.setCategory(Category.FOOD);
-                registerDTO.setImage(imageBase64);
+                registerDTO.setImage(imageBytes);
 
                 updateView();
 
