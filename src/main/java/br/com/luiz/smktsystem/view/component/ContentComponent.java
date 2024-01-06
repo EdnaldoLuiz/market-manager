@@ -3,6 +3,7 @@ package br.com.luiz.smktsystem.view.component;
 import javax.persistence.EntityManager;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
@@ -22,51 +23,79 @@ import br.com.luiz.smktsystem.utils.javax.CustomScrollbar;
 
 public class ContentComponent extends JPanel {
 
-    public ContentComponent() {
-        setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        JScrollPane scrollPane = new JScrollPane(createWideArea());
+    private JScrollPane createWideAreaScrollPane() {
+        JPanel wideArea = createWideArea();
+        JScrollPane scrollPane = new JScrollPane(wideArea);
         scrollPane.setPreferredSize(new Dimension(990, 450));
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
         scrollPane.getVerticalScrollBar().setUI(new CustomScrollbar());
+        scrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
-        add(scrollPane);
-        add(createEmptyArea("Standard Area", 650, 200));
-        add(createEmptyArea("Narrow Area", 330, 200));
+        int spacing = 14;
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(spacing, spacing, spacing, spacing));
 
-        JButton addButton = new JButton("Adicionar Produto");
-        addButton.addActionListener(e -> showAddProductDialog());
-        add(addButton);
+        return scrollPane;
+    }
+
+    public ContentComponent() {
+        setLayout(new BorderLayout(10, 10));
+
+        JScrollPane scrollPane = createWideAreaScrollPane();
+        add(scrollPane, BorderLayout.CENTER);
+
+        JPanel sidePanel = new JPanel(new BorderLayout());
+
+        JPanel innerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        innerPanel.add(createStandardArea());
+        innerPanel.add(createNarrowArea());
+
+        sidePanel.add(innerPanel, BorderLayout.SOUTH);
+
+        add(sidePanel, BorderLayout.SOUTH);
     }
 
     private JPanel createWideArea() {
-        JPanel wideArea = new JPanel(new GridLayout(0, 4, 10, 10));
-
+        JPanel wideArea = new JPanel();
+        wideArea.setLayout(new GridLayout(0, 4, 10, 10));
+        wideArea.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+    
+        int productCardHeight = 280;
+    
         ProductService productService = new ProductService(new ProductDAO(JpaUtil.getEntityManager()));
         List<Product> products = productService.getAllProducts();
-
+    
         for (Product product : products) {
             ProductRegisterDTO productDTO = ProductMapper.INSTANCE.entityToRegisterDTO(product);
-
+            int productCardWidth = wideArea.getPreferredSize().width / 4;
+    
             wideArea.add(new ProductCard(
-                productDTO.getProductName(),
-                productDTO.getCategory().toString(),
-                productDTO.getProductPrice(),
-                productDTO.getImage()
-        ));
+                    productDTO.getProductName(),
+                    productDTO.getProductPrice(),
+                    productDTO.getImage(),
+                    productCardHeight,
+                    productCardWidth));
         }
-
+    
         return wideArea;
     }
 
-    private JPanel createEmptyArea(String areaName, int width, int height) {
-        JPanel area = new JPanel();
-        area.setPreferredSize(new Dimension(width, height));
-        Border redBorder = BorderFactory.createLineBorder(Color.RED, 2);
-        area.setBorder(BorderFactory.createTitledBorder(redBorder, areaName));
-        return area;
+    private JPanel createStandardArea() {
+        JPanel standardArea = new JPanel();
+        standardArea.setPreferredSize(new Dimension(700, 200));
+        standardArea.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        return standardArea;
+    }
+
+    private JPanel createNarrowArea() {
+        JPanel narrowArea = new JPanel();
+        narrowArea.setPreferredSize(new Dimension(300, 200));
+        narrowArea.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+
+        JButton addButton = new JButton("Adicionar Produto");
+        addButton.addActionListener(e -> showAddProductDialog());
+        narrowArea.add(addButton);
+
+        return narrowArea;
     }
 
     private void showAddProductDialog() {
@@ -115,7 +144,6 @@ public class ContentComponent extends JPanel {
     }
 
     private void updateView() {
-        // Atualizar a visualização conforme necessário
         removeAll();
         revalidate();
         repaint();
