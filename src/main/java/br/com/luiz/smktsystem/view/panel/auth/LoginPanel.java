@@ -9,7 +9,7 @@ import javax.swing.*;
 import br.com.luiz.smktsystem.service.EmployeerService;
 import br.com.luiz.smktsystem.service.dao.AuthenticationListener;
 import br.com.luiz.smktsystem.service.dao.AuthenticationManager;
-import br.com.luiz.smktsystem.utils.javax.icon.ResizeIcon;
+import br.com.luiz.smktsystem.utils.ResizeIcon;
 import br.com.luiz.smktsystem.view.panel.main.MainPanel;
 import br.com.luiz.smktsystem.view.shared.modal.Modal;
 

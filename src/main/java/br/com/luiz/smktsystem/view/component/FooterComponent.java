@@ -3,7 +3,7 @@ package br.com.luiz.smktsystem.view.component;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import br.com.luiz.smktsystem.utils.javax.color.CustomColor;
+import br.com.luiz.smktsystem.utils.javax.CustomColor;
 
 import java.awt.*;
 

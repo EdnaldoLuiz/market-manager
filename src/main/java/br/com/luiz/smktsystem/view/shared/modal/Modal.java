@@ -2,8 +2,8 @@ package br.com.luiz.smktsystem.view.shared.modal;
 
 import javax.swing.*;
 
-import br.com.luiz.smktsystem.utils.javax.color.CustomColor;
-import br.com.luiz.smktsystem.utils.javax.icon.ResizeIcon;
+import br.com.luiz.smktsystem.utils.ResizeIcon;
+import br.com.luiz.smktsystem.utils.javax.CustomColor;
 
 import java.awt.*;
 

@@ -2,7 +2,7 @@ package br.com.luiz.smktsystem.view.panel.auth;
 
 import javax.swing.*;
 import br.com.luiz.smktsystem.service.EmployeerService;
-import br.com.luiz.smktsystem.utils.javax.icon.ResizeIcon;
+import br.com.luiz.smktsystem.utils.ResizeIcon;
 import br.com.luiz.smktsystem.view.shared.modal.Modal;
 
 import java.awt.*;

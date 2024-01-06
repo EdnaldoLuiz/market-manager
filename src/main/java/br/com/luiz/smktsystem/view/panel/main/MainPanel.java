@@ -12,13 +12,11 @@ import java.awt.*;
 
 public class MainPanel extends JPanel {
 
-    private ProductService productService;
-
     public MainPanel() {
         setLayout(new BorderLayout());
         add(new SidebarComponent(), BorderLayout.WEST);
         add(new HeaderComponent(), BorderLayout.NORTH);
         add(new FooterComponent(), BorderLayout.SOUTH);
-        add(new ContentComponent(productService), BorderLayout.CENTER);
+        add(new ContentComponent(), BorderLayout.CENTER);
     }
 }

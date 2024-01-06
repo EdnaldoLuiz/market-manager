@@ -8,7 +8,7 @@ public class ProductRegisterDTO {
     private Double productPrice;
     private Integer productQuantity;
     private Category category;
-    private byte[] image;
+    private String image;
 
     public String getProductName() {
         return productName;
@@ -42,11 +42,11 @@ public class ProductRegisterDTO {
         this.category = category;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

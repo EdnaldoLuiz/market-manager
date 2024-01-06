@@ -14,5 +14,7 @@ public interface ProductMapper {
 
     @Mapping(target = "id", ignore = true)
     Product registerToEntity(ProductRegisterDTO dto);
+
+    ProductRegisterDTO entityToRegisterDTO(Product entity);
     
 }

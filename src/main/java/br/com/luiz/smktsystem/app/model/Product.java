@@ -2,6 +2,7 @@ package br.com.luiz.smktsystem.app.model;
 
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,12 +21,12 @@ public class Product {
     private Integer productQuantity;
     private Category category;
 
-    @Lob
-    private byte[] image;
+    @Column(length = 100000, columnDefinition = "TEXT")
+    private String image;
 
     public Product() {}
 
-    public Product(String productName, Double productPrice, Integer productQuantity, Category category, byte[] image) {
+    public Product(String productName, Double productPrice, Integer productQuantity, Category category, String image) {
         this.productName = productName;
         this.productPrice = productPrice;
         this.productQuantity = productQuantity;
@@ -73,11 +74,11 @@ public class Product {
         this.category = category;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
