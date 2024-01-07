@@ -1,6 +1,7 @@
 package br.com.luiz.smktsystem.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import br.com.luiz.smktsystem.app.model.Product;
 import br.com.luiz.smktsystem.service.dao.ProductDAO;
@@ -18,6 +19,10 @@ public class ProductService {
     public void registerProduct(ProductRegisterDTO registerDTO) {
         Product product = ProductMapper.INSTANCE.registerToEntity(registerDTO);
         productDAO.createProduct(product);
+    }
+
+    public void deleteProduct(UUID productId) {
+        productDAO.deleteProduct(productId);
     }
 
     public List<Product> getAllProducts() {

@@ -2,12 +2,12 @@ package br.com.luiz.smktsystem.view.component;
 
 import javax.persistence.EntityManager;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.luiz.smktsystem.app.enums.Category;
@@ -20,11 +20,17 @@ import br.com.luiz.smktsystem.utils.ImageByteUtil;
 import br.com.luiz.smktsystem.utils.JpaUtil;
 import br.com.luiz.smktsystem.utils.ProductCard;
 import br.com.luiz.smktsystem.utils.javax.CustomScrollbar;
+import javafx.event.ActionEvent;
 
 public class ContentComponent extends JPanel {
 
+    private JPanel wideArea;
+    private JPanel standardArea;
+    private JPanel narrowArea;
+    private List<ProductCard> productCards = new ArrayList<>();
+
     private JScrollPane createWideAreaScrollPane() {
-        JPanel wideArea = createWideArea();
+        wideArea = createWideArea();
         JScrollPane scrollPane = new JScrollPane(wideArea);
         scrollPane.setPreferredSize(new Dimension(990, 450));
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -40,18 +46,67 @@ public class ContentComponent extends JPanel {
     public ContentComponent() {
         setLayout(new BorderLayout(10, 10));
 
+        JPanel headerPanel = createHeader();
+        add(headerPanel, BorderLayout.NORTH);
+
+        wideArea = createWideArea();
         JScrollPane scrollPane = createWideAreaScrollPane();
         add(scrollPane, BorderLayout.CENTER);
 
-        JPanel sidePanel = new JPanel(new BorderLayout());
+        standardArea = createStandardArea();
+        narrowArea = createNarrowArea();
 
+        JPanel sidePanel = new JPanel(new BorderLayout());
         JPanel innerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
-        innerPanel.add(createStandardArea());
-        innerPanel.add(createNarrowArea());
+        innerPanel.add(standardArea);
+        innerPanel.add(narrowArea);
 
         sidePanel.add(innerPanel, BorderLayout.SOUTH);
 
         add(sidePanel, BorderLayout.SOUTH);
+    }
+
+    private class CategoryButtonListener implements ActionListener {
+        private final Category category;
+
+        public CategoryButtonListener(Category category) {
+            this.category = category;
+        }
+
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+            System.out.println("Categoria selecionada: " + category.getDescription());
+        }
+    }
+
+    private ProductCard createProductCard(ProductRegisterDTO productDTO) {
+        ProductCard card = new ProductCard(
+                productDTO.getProductName(),
+                productDTO.getProductPrice(),
+                productDTO.getImage(),
+                280,
+                getWidth() / 4 - 20,
+                productDTO.getId(),
+                this);
+
+        productCards.add(card);
+
+        return card;
+    }
+
+    private JPanel createHeader() {
+        JPanel headerPanel = new JPanel();
+        headerPanel.setPreferredSize(new Dimension(700, 50));
+        headerPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        headerPanel.setLayout(new GridLayout(1, 5, 10, 10));
+
+        for (Category category : Category.values()) {
+            JButton categoryButton = new JButton(category.getDescription());
+            categoryButton.addActionListener(new CategoryButtonListener(category));
+            headerPanel.add(categoryButton);
+        }
+
+        return headerPanel;
     }
 
     private JPanel createWideArea() {
@@ -59,21 +114,12 @@ public class ContentComponent extends JPanel {
         wideArea.setLayout(new GridLayout(0, 4, 10, 10));
         wideArea.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
     
-        int productCardHeight = 280;
-    
         ProductService productService = new ProductService(new ProductDAO(JpaUtil.getEntityManager()));
         List<Product> products = productService.getAllProducts();
     
         for (Product product : products) {
             ProductRegisterDTO productDTO = ProductMapper.INSTANCE.entityToRegisterDTO(product);
-            int productCardWidth = wideArea.getPreferredSize().width / 4;
-    
-            wideArea.add(new ProductCard(
-                    productDTO.getProductName(),
-                    productDTO.getProductPrice(),
-                    productDTO.getImage(),
-                    productCardHeight,
-                    productCardWidth));
+            wideArea.add(createProductCard(productDTO));
         }
     
         return wideArea;
@@ -143,9 +189,22 @@ public class ContentComponent extends JPanel {
         }
     }
 
-    private void updateView() {
-        removeAll();
+    public void updateView() {
+        wideArea.removeAll(); 
+    
+        ProductService productService = new ProductService(new ProductDAO(JpaUtil.getEntityManager()));
+        List<Product> products = productService.getAllProducts();
+    
+        for (Product product : products) {
+            ProductRegisterDTO productDTO = ProductMapper.INSTANCE.entityToRegisterDTO(product);
+            wideArea.add(createProductCard(productDTO));
+        }
+    
+        JScrollPane scrollPane = createWideAreaScrollPane();
+        scrollPane.setViewportView(wideArea);
+    
         revalidate();
         repaint();
     }
+    
 }

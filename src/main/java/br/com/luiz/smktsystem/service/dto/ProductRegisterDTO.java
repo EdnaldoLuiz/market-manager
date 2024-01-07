@@ -1,14 +1,25 @@
 package br.com.luiz.smktsystem.service.dto;
 
+import java.util.UUID;
+
 import br.com.luiz.smktsystem.app.enums.Category;
 
 public class ProductRegisterDTO {
 
+    private UUID id;
     private String productName;
     private Double productPrice;
     private Integer productQuantity;
     private Category category;
     private byte[] image;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public String getProductName() {
         return productName;

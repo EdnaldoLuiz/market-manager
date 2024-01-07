@@ -6,7 +6,6 @@ public enum Category {
         CLEANING("Limpeza"),
         HYGIENE("Higiene"),
         OFFICE("Escritório"),
-        ELECTRONICS("Eletrônicos"),
         OTHERS("Outros");
     
         private String description;

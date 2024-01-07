@@ -3,25 +3,34 @@ package br.com.luiz.smktsystem.utils;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import br.com.luiz.smktsystem.service.ProductService;
+import br.com.luiz.smktsystem.service.dao.ProductDAO;
 import br.com.luiz.smktsystem.utils.javax.CustomColor;
+import br.com.luiz.smktsystem.view.component.ContentComponent;
 
 import java.awt.*;
+import java.util.UUID;
 
 public class ProductCard extends JPanel {
 
+    private ContentComponent mainView;
     private final String productName;
     private final double price;
     private final ImageIcon productImage;
+    private final UUID productId;
 
-    public ProductCard(String productName, double price, byte[] base64Image, int desiredHeight, int desiredWidth) {
+    public ProductCard(String productName, double price, byte[] base64Image, int desiredHeight, int desiredWidth, UUID productId, ContentComponent mainView) {
         this.productName = productName;
         this.price = price;
         this.productImage = new ImageIcon(base64Image);
+        this.productId = productId; 
         initComponents(desiredHeight, desiredWidth);
+        this.mainView = mainView;
     }
 
     private void initComponents(int desiredHeight, int desiredWidth) {
         setPreferredSize(new Dimension(desiredWidth, desiredHeight));
+        setMaximumSize(new Dimension(desiredWidth, desiredHeight));
         setBackground(Color.white);
         setLayout(new BorderLayout());
 
@@ -48,7 +57,7 @@ public class ProductCard extends JPanel {
         JButton deleteButton = new JButton("Excluir");
         deleteButton.addActionListener(e -> deleteProduct());
         JButton editButton = new JButton("Editar");
-        deleteButton.addActionListener(e -> editProduct());
+        editButton.addActionListener(e -> editProduct());
 
         priceLabel.setFont(new Font("Arial", Font.BOLD, 16));
         priceLabel.setForeground(Color.YELLOW);
@@ -70,10 +79,16 @@ public class ProductCard extends JPanel {
     }
 
     private void deleteProduct() {
-        JOptionPane.showMessageDialog(this, "Produto excluído com sucesso!");
-        updateView();
-    }
-
+        int confirm = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir este produto?", "Confirmar Exclusão", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            ProductService productService = new ProductService(new ProductDAO(JpaUtil.getEntityManager()));
+            productService.deleteProduct(productId); 
+            JOptionPane.showMessageDialog(this, "Produto excluído com sucesso!");
+            setOpaque(false);
+            mainView.updateView();
+        }
+    }    
+    
     private void editProduct() {
         JOptionPane.showMessageDialog(this, "Produto atualizado!");
         updateView();

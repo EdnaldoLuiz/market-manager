@@ -1,6 +1,7 @@
 package br.com.luiz.smktsystem.service.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -55,7 +56,7 @@ public class ProductDAO {
         }
     }
 
-    public void deleteProduct(Long id) {
+    public void deleteProduct(UUID id) {
         EntityTransaction transaction = entityManager.getTransaction();
 
         try {
