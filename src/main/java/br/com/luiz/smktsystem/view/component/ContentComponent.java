@@ -20,10 +20,10 @@ import br.com.luiz.smktsystem.utils.ImageByteUtil;
 import br.com.luiz.smktsystem.utils.JpaUtil;
 import br.com.luiz.smktsystem.utils.ProductCard;
 import br.com.luiz.smktsystem.utils.javax.CustomScrollbar;
-import javafx.event.ActionEvent;
 
 public class ContentComponent extends JPanel {
 
+    private JScrollPane scrollPane;
     private JPanel wideArea;
     private JPanel standardArea;
     private JPanel narrowArea;
@@ -31,7 +31,7 @@ public class ContentComponent extends JPanel {
 
     private JScrollPane createWideAreaScrollPane() {
         wideArea = createWideArea();
-        JScrollPane scrollPane = new JScrollPane(wideArea);
+        scrollPane = new JScrollPane(wideArea);
         scrollPane.setPreferredSize(new Dimension(990, 450));
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.getVerticalScrollBar().setUI(new CustomScrollbar());
@@ -113,15 +113,15 @@ public class ContentComponent extends JPanel {
         JPanel wideArea = new JPanel();
         wideArea.setLayout(new GridLayout(0, 4, 10, 10));
         wideArea.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-    
+
         ProductService productService = new ProductService(new ProductDAO(JpaUtil.getEntityManager()));
         List<Product> products = productService.getAllProducts();
-    
+
         for (Product product : products) {
             ProductRegisterDTO productDTO = ProductMapper.INSTANCE.entityToRegisterDTO(product);
             wideArea.add(createProductCard(productDTO));
         }
-    
+
         return wideArea;
     }
 
@@ -175,7 +175,7 @@ public class ContentComponent extends JPanel {
                 registerDTO.setCategory(Category.FOOD);
                 registerDTO.setImage(imageBytes);
 
-                updateView();
+                updateViewForNewProduct(registerDTO);
 
                 productService.registerProduct(registerDTO);
                 JOptionPane.showMessageDialog(this, "Produto cadastrado com sucesso!");
@@ -190,21 +190,26 @@ public class ContentComponent extends JPanel {
     }
 
     public void updateView() {
-        wideArea.removeAll(); 
-    
+        wideArea.removeAll();
+
         ProductService productService = new ProductService(new ProductDAO(JpaUtil.getEntityManager()));
         List<Product> products = productService.getAllProducts();
-    
+
         for (Product product : products) {
             ProductRegisterDTO productDTO = ProductMapper.INSTANCE.entityToRegisterDTO(product);
             wideArea.add(createProductCard(productDTO));
         }
-    
-        JScrollPane scrollPane = createWideAreaScrollPane();
+
         scrollPane.setViewportView(wideArea);
-    
         revalidate();
         repaint();
     }
-    
+
+    public void updateViewForNewProduct(ProductRegisterDTO newProductDTO) {
+        wideArea.add(createProductCard(newProductDTO));
+        JScrollPane scrollPane = createWideAreaScrollPane();
+        scrollPane.setViewportView(wideArea);
+        revalidate();
+        repaint();
+    }
 }
