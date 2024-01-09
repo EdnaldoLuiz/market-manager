@@ -1,13 +1,8 @@
 import javax.persistence.EntityManager;
 import javax.swing.SwingUtilities;
 
-import br.com.luiz.smktsystem.app.enums.Category;
-import br.com.luiz.smktsystem.app.model.Product;
 import br.com.luiz.smktsystem.service.EmployeerService;
-import br.com.luiz.smktsystem.service.ProductService;
 import br.com.luiz.smktsystem.service.dao.EmployeerDAO;
-import br.com.luiz.smktsystem.service.dao.ProductDAO;
-import br.com.luiz.smktsystem.service.dto.ProductRegisterDTO;
 import br.com.luiz.smktsystem.utils.JpaUtil;
 import br.com.luiz.smktsystem.view.panel.auth.LoginPanel;
 

@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import br.com.luiz.smktsystem.app.enums.Role;
+
 @Entity
 public class Employeer {
 
@@ -16,6 +18,7 @@ public class Employeer {
   private String email;
   private String cpf;
   private String password;
+  private Role role;
 
   public Employeer() {}
 
@@ -24,6 +27,7 @@ public class Employeer {
     this.email = email;
     this.cpf = cpf;
     this.password = password;
+    this.role = Role.EMPLOYEE;
   }
 
   public String getName() {
@@ -64,5 +68,13 @@ public class Employeer {
 
   public void setId(UUID id) {
     this.id = id;
+  }
+
+  public Role getRole() {
+    return role;
+  }
+
+  public void setRole(Role role) {
+    this.role = role;
   }
 }

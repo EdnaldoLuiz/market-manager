@@ -32,7 +32,7 @@ public class ProductDAO {
         }
     }
 
-    public Product findProductById(Long id) {
+    public Product findProductById(UUID id) {
         try {
             return entityManager.find(Product.class, id);
         } catch (Exception e) {

@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import br.com.luiz.smktsystem.app.model.Employeer;
+import br.com.luiz.smktsystem.service.dto.EmployeerListDTO;
 import br.com.luiz.smktsystem.service.dto.EmployeerLoginDTO;
 import br.com.luiz.smktsystem.service.dto.EmployeerRegisterDTO;
 
@@ -20,4 +21,13 @@ public interface EmployeerMapper {
     @Mapping(target = "cpf", ignore = true)
     @Mapping(target = "name", ignore = true)
     Employeer loginToToEntity(EmployeerLoginDTO dto);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "password", ignore = true)
+    Employeer listToEntity(EmployeerListDTO dto);
+
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "email", target = "email")
+    @Mapping(source = "cpf", target = "cpf")
+    EmployeerListDTO entityToListDTO(Employeer employeer);
 }

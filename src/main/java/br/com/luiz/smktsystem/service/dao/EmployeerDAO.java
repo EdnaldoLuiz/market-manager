@@ -1,5 +1,8 @@
 package br.com.luiz.smktsystem.service.dao;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
@@ -53,4 +56,16 @@ public class EmployeerDAO {
             return false;
         }
     }
+
+    public List<Employeer> getAllEmployeers() {
+        try {
+            String jpql = "SELECT e FROM Employeer e";
+            Query query = entityManager.createQuery(jpql, Employeer.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+    
 }

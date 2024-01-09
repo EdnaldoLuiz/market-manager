@@ -28,5 +28,17 @@ public class ProductService {
     public List<Product> getAllProducts() {
         return productDAO.getAllProducts();
     }
+
+    public void updateProduct(UUID productId, ProductRegisterDTO updatedProductDTO) {
+        Product existingProduct = productDAO.findProductById(productId);
+        
+        if (existingProduct != null) {
+            existingProduct.setProductName(updatedProductDTO.getProductName());
+            existingProduct.setProductPrice(updatedProductDTO.getProductPrice());
+            existingProduct.setProductQuantity(updatedProductDTO.getProductQuantity());
+            existingProduct.setCategory(updatedProductDTO.getCategory());
+            productDAO.updateProduct(existingProduct);
+        }
+    }
 }
 
