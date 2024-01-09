@@ -3,6 +3,7 @@ package br.com.luiz.smktsystem.view.panel.auth;
 import javax.swing.*;
 import br.com.luiz.smktsystem.service.EmployeerService;
 import br.com.luiz.smktsystem.utils.ResizeIcon;
+import br.com.luiz.smktsystem.utils.javax.CustomButton;
 import br.com.luiz.smktsystem.view.shared.modal.Modal;
 
 import java.awt.*;
@@ -14,10 +15,6 @@ public class ResetPasswordPanel extends JPanel {
     public ResetPasswordPanel(EmployeerService employeerService) {
         this.employeerService = employeerService;
         initComponents();
-    }
-
-    private static ImageIcon createResizedIcon(String path, int width, int height) {
-        return ResizeIcon.createResizedIcon(path, width, height);
     }
 
     private void initComponents() {
@@ -39,7 +36,7 @@ public class ResetPasswordPanel extends JPanel {
         gbc.gridwidth = 2;
         add(titleLabel, gbc);
 
-        ImageIcon originalIcon = createResizedIcon("src/main/resources/icons/forgot-password.png", 80, 80);
+        ImageIcon originalIcon = ResizeIcon.createResizedIcon("src/main/resources/icons/forgot-password.png", 80, 80);
         JLabel iconLabel = new JLabel(originalIcon);
 
         JPanel iconPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -70,14 +67,8 @@ public class ResetPasswordPanel extends JPanel {
 
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(20, 5, 5, 5);
-        JButton submitButton = new JButton("ENVIAR");
-        submitButton.setBackground(Color.RED);
-        submitButton.setForeground(Color.WHITE);
-        submitButton.setPreferredSize(new Dimension(220, 40));
-        submitButton.setFont(new Font("Arial", Font.BOLD, 20));
-
-        submitButton.addActionListener(e -> submitAction(emailField.getText()));
-
+        JButton submitButton = new CustomButton("ENVIAR", Color.RED, Color.WHITE, 220, 40, 20,
+                e -> submitAction(emailField.getText()));
         add(submitButton, gbc);
     }
 

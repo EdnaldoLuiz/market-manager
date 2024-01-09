@@ -12,8 +12,10 @@ import br.com.luiz.smktsystem.utils.javax.CustomColor;
 public class SidebarComponent extends JPanel {
 
     private JPanel selectedOption = null;
+    private ContentComponent contentComponent;
 
-    public SidebarComponent() {
+    public SidebarComponent(ContentComponent contentComponent) {
+        this.contentComponent = contentComponent;
         setBackground(Color.RED);
         setPreferredSize(new Dimension(250, getHeight()));
         setBorder(new EmptyBorder(40, 0, 0, 0));
@@ -54,6 +56,7 @@ public class SidebarComponent extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 selectOption(optionPanel);
+                contentComponent.handleSidebarOption(text);
             }
         });
 
@@ -65,11 +68,11 @@ public class SidebarComponent extends JPanel {
             selectedOption.setBackground(Color.RED);
             JLabel selectedLabel = (JLabel) selectedOption.getComponent(1);
             selectedLabel.setForeground(Color.WHITE);
-            selectedLabel.setFont(new Font("Arial", Font.PLAIN, 22)); // Define a fonte como plano
+            selectedLabel.setFont(new Font("Arial", Font.PLAIN, 22));
         }
         selectedOption = optionPanel;
         selectedOption.setBackground(CustomColor.HOVER_RED);
         JLabel selectedLabel = (JLabel) selectedOption.getComponent(1);
-        selectedLabel.setFont(new Font("Arial", Font.BOLD, 22)); // Define a fonte como negrito
+        selectedLabel.setFont(new Font("Arial", Font.BOLD, 22));
     }
 }

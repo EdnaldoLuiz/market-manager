@@ -10,6 +10,7 @@ import br.com.luiz.smktsystem.service.EmployeerService;
 import br.com.luiz.smktsystem.service.dao.AuthenticationListener;
 import br.com.luiz.smktsystem.service.dao.AuthenticationManager;
 import br.com.luiz.smktsystem.utils.ResizeIcon;
+import br.com.luiz.smktsystem.utils.javax.CustomButton;
 import br.com.luiz.smktsystem.view.panel.main.MainPanel;
 import br.com.luiz.smktsystem.view.shared.modal.Modal;
 
@@ -130,13 +131,7 @@ public class LoginPanel extends JFrame implements AuthenticationListener {
     }
 
     private JButton createLoginButton() {
-        JButton loginButton = new JButton("LOGIN");
-        loginButton.setBackground(Color.RED);
-        loginButton.setForeground(Color.WHITE);
-        loginButton.setPreferredSize(new Dimension(250, 40));
-        loginButton.setFont(new Font("Arial", Font.BOLD, 20));
-        loginButton.addActionListener(e -> openMainView());
-        return loginButton;
+        return new CustomButton("LOGIN", Color.RED, Color.WHITE, 250, 40, 20, e -> openMainView());
     }
 
     private JLabel createForgotPasswordLabel(Font font) {
@@ -168,7 +163,7 @@ public class LoginPanel extends JFrame implements AuthenticationListener {
         mainFrame.setSize(1300, 900);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setLocationRelativeTo(null);
-        mainFrame.add(new MainPanel());
+        mainFrame.add(new MainPanel(employeerService));
         mainFrame.setVisible(true);
     }
 

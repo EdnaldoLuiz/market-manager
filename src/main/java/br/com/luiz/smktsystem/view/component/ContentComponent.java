@@ -1,18 +1,33 @@
 package br.com.luiz.smktsystem.view.component;
 
-import javax.persistence.EntityManager;
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import br.com.luiz.smktsystem.app.enums.Category;
 import br.com.luiz.smktsystem.app.model.Product;
+import br.com.luiz.smktsystem.service.EmployeerService;
 import br.com.luiz.smktsystem.service.ProductService;
+import br.com.luiz.smktsystem.service.dao.EmployeerDAO;
 import br.com.luiz.smktsystem.service.dao.ProductDAO;
 import br.com.luiz.smktsystem.service.dto.ProductRegisterDTO;
 import br.com.luiz.smktsystem.service.mapper.ProductMapper;
@@ -20,6 +35,7 @@ import br.com.luiz.smktsystem.utils.ImageByteUtil;
 import br.com.luiz.smktsystem.utils.JpaUtil;
 import br.com.luiz.smktsystem.utils.ProductCard;
 import br.com.luiz.smktsystem.utils.javax.CustomScrollbar;
+import br.com.luiz.smktsystem.view.panel.employee.EmployeesPanel;
 
 public class ContentComponent extends JPanel {
 
@@ -28,6 +44,7 @@ public class ContentComponent extends JPanel {
     private JPanel standardArea;
     private JPanel narrowArea;
     private List<ProductCard> productCards = new ArrayList<>();
+    private JPanel currentPanel;
 
     private JScrollPane createWideAreaScrollPane() {
         wideArea = createWideArea();
@@ -43,6 +60,27 @@ public class ContentComponent extends JPanel {
         return scrollPane;
     }
 
+    private void updateViewForPanel(JPanel panel) {
+        currentPanel = panel;
+        scrollPane.setViewportView(currentPanel);
+        revalidate();
+        repaint();
+    }
+    public void handleSidebarOption(String option) {
+        switch (option) {
+            case "Mercadorias":
+                updateViewForPanel(createWideArea());
+                break;
+            case "Funcionarios":
+                updateViewForPanel(createEmployeesPanel());
+                break;
+        }
+    }
+
+    private JPanel createEmployeesPanel() {
+        return new EmployeesPanel(new EmployeerService(new EmployeerDAO(JpaUtil.getEntityManager()))); 
+    }
+
     public ContentComponent() {
         setLayout(new BorderLayout(10, 10));
 
@@ -50,8 +88,7 @@ public class ContentComponent extends JPanel {
         add(headerPanel, BorderLayout.NORTH);
 
         wideArea = createWideArea();
-        JScrollPane scrollPane = createWideAreaScrollPane();
-        add(scrollPane, BorderLayout.CENTER);
+        
 
         standardArea = createStandardArea();
         narrowArea = createNarrowArea();
@@ -60,6 +97,11 @@ public class ContentComponent extends JPanel {
         JPanel innerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
         innerPanel.add(standardArea);
         innerPanel.add(narrowArea);
+
+        currentPanel = createWideArea();
+        JScrollPane scrollPane = createWideAreaScrollPane();
+        scrollPane.setViewportView(currentPanel);
+        add(scrollPane, BorderLayout.CENTER);
 
         sidePanel.add(innerPanel, BorderLayout.SOUTH);
 
@@ -112,18 +154,23 @@ public class ContentComponent extends JPanel {
     private JPanel createWideArea() {
         JPanel wideArea = new JPanel();
         wideArea.setLayout(new GridLayout(0, 4, 10, 10));
-        wideArea.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-
+        wideArea.setBackground(Color.GRAY);
+    
+        int externalMargin = 10;
+        wideArea.setBorder(BorderFactory.createEmptyBorder(externalMargin, externalMargin, externalMargin, externalMargin));
+    
         ProductService productService = new ProductService(new ProductDAO(JpaUtil.getEntityManager()));
         List<Product> products = productService.getAllProducts();
-
+    
         for (Product product : products) {
             ProductRegisterDTO productDTO = ProductMapper.INSTANCE.entityToRegisterDTO(product);
             wideArea.add(createProductCard(productDTO));
         }
-
+        wideArea.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+    
         return wideArea;
     }
+    
 
     private JPanel createStandardArea() {
         JPanel standardArea = new JPanel();
@@ -145,48 +192,76 @@ public class ContentComponent extends JPanel {
     }
 
     private void showAddProductDialog() {
-        String productName = JOptionPane.showInputDialog(this, "Nome do Produto:");
-        String priceStr = JOptionPane.showInputDialog(this, "Preço do Produto:");
-        String quantityStr = JOptionPane.showInputDialog(this, "Quantidade do Produto:");
+        JDialog dialog = new JDialog((Frame) null, "Adicionar Produto", true);
+        dialog.setLayout(new BorderLayout());
 
-        try {
-            double price = Double.parseDouble(priceStr);
-            int quantity = Integer.parseInt(quantityStr);
+        JPanel inputPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+        inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        JTextField productNameField = new JTextField();
+        JTextField priceField = new JTextField();
+        JTextField quantityField = new JTextField();
+        JButton chooseImageButton = new JButton("Escolher Imagem");
+
+        inputPanel.add(new JLabel("Nome do Produto:"));
+        inputPanel.add(productNameField);
+        inputPanel.add(new JLabel("Preço do Produto:"));
+        inputPanel.add(priceField);
+        inputPanel.add(new JLabel("Quantidade do Produto:"));
+        inputPanel.add(quantityField);
+        inputPanel.add(new JLabel("Imagem do Produto:"));
+        inputPanel.add(chooseImageButton);
+
+        JButton addButton = new JButton("Adicionar");
+        addButton.addActionListener(e -> {
+            try {
+                String productName = productNameField.getText();
+                double price = Double.parseDouble(priceField.getText());
+                int quantity = Integer.parseInt(quantityField.getText());
+
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setDialogTitle("Escolha uma imagem");
+                fileChooser.setFileFilter(new FileNameExtensionFilter("Imagens", "jpg", "jpeg", "png", "gif"));
+
+                int userSelection = fileChooser.showOpenDialog(dialog);
+
+                if (userSelection == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    byte[] imageBytes = ImageByteUtil.encode(selectedFile.getAbsolutePath());
+
+                    ProductRegisterDTO registerDTO = new ProductRegisterDTO();
+                    registerDTO.setProductName(productName);
+                    registerDTO.setProductPrice(price);
+                    registerDTO.setProductQuantity(quantity);
+                    registerDTO.setCategory(Category.FOOD);
+                    registerDTO.setImage(imageBytes);
+
+                    updateViewForNewProduct(registerDTO);
+
+                    ProductService productService = new ProductService(new ProductDAO(JpaUtil.getEntityManager()));
+                    productService.registerProduct(registerDTO);
+                    JOptionPane.showMessageDialog(dialog, "Produto cadastrado com sucesso!");
+                    dialog.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(dialog, "Operação cancelada. Nenhuma imagem selecionada.");
+                }
+            } catch (NumberFormatException | IOException ex) {
+                JOptionPane.showMessageDialog(dialog, "Por favor, insira valores válidos para preço e quantidade.");
+            }
+        });
+
+        dialog.add(inputPanel, BorderLayout.CENTER);
+        dialog.add(addButton, BorderLayout.SOUTH);
+
+        chooseImageButton.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogTitle("Escolha uma imagem");
             fileChooser.setFileFilter(new FileNameExtensionFilter("Imagens", "jpg", "jpeg", "png", "gif"));
+        });
 
-            int userSelection = fileChooser.showOpenDialog(this);
-
-            if (userSelection == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = fileChooser.getSelectedFile();
-
-                byte[] imageBytes = ImageByteUtil.encode(selectedFile.getAbsolutePath());
-
-                EntityManager entityManager = JpaUtil.getEntityManager();
-                ProductDAO productDAO = new ProductDAO(entityManager);
-                ProductService productService = new ProductService(productDAO);
-
-                ProductRegisterDTO registerDTO = new ProductRegisterDTO();
-                registerDTO.setProductName(productName);
-                registerDTO.setProductPrice(price);
-                registerDTO.setProductQuantity(quantity);
-                registerDTO.setCategory(Category.FOOD);
-                registerDTO.setImage(imageBytes);
-
-                updateViewForNewProduct(registerDTO);
-
-                productService.registerProduct(registerDTO);
-                JOptionPane.showMessageDialog(this, "Produto cadastrado com sucesso!");
-            } else {
-                JOptionPane.showMessageDialog(this, "Operação cancelada. Nenhuma imagem selecionada.");
-            }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Por favor, insira valores válidos para preço e quantidade.");
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao ler a imagem selecionada.");
-        }
+        dialog.setSize(new Dimension(400, 250));
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
     public void updateView() {
