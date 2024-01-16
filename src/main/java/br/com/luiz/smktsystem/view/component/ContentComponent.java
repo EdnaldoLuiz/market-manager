@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -34,6 +35,8 @@ import br.com.luiz.smktsystem.service.mapper.ProductMapper;
 import br.com.luiz.smktsystem.utils.ImageByteUtil;
 import br.com.luiz.smktsystem.utils.JpaUtil;
 import br.com.luiz.smktsystem.utils.ProductCard;
+import br.com.luiz.smktsystem.utils.ResizeIcon;
+import br.com.luiz.smktsystem.utils.javax.CustomButton;
 import br.com.luiz.smktsystem.utils.javax.CustomScrollbar;
 import br.com.luiz.smktsystem.view.panel.employee.EmployeesPanel;
 
@@ -41,8 +44,6 @@ public class ContentComponent extends JPanel {
 
     private JScrollPane scrollPane;
     private JPanel wideArea;
-    private JPanel standardArea;
-    private JPanel narrowArea;
     private List<ProductCard> productCards = new ArrayList<>();
     private JPanel currentPanel;
 
@@ -66,6 +67,7 @@ public class ContentComponent extends JPanel {
         revalidate();
         repaint();
     }
+
     public void handleSidebarOption(String option) {
         switch (option) {
             case "Mercadorias":
@@ -78,34 +80,31 @@ public class ContentComponent extends JPanel {
     }
 
     private JPanel createEmployeesPanel() {
-        return new EmployeesPanel(new EmployeerService(new EmployeerDAO(JpaUtil.getEntityManager()))); 
+        return new EmployeesPanel(new EmployeerService(new EmployeerDAO(JpaUtil.getEntityManager())));
     }
 
     public ContentComponent() {
         setLayout(new BorderLayout(10, 10));
 
-        JPanel headerPanel = createHeader();
-        add(headerPanel, BorderLayout.NORTH);
-
         wideArea = createWideArea();
-        
-
-        standardArea = createStandardArea();
-        narrowArea = createNarrowArea();
-
-        JPanel sidePanel = new JPanel(new BorderLayout());
-        JPanel innerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
-        innerPanel.add(standardArea);
-        innerPanel.add(narrowArea);
 
         currentPanel = createWideArea();
         JScrollPane scrollPane = createWideAreaScrollPane();
         scrollPane.setViewportView(currentPanel);
+
+        wideArea.add(createHeader(), BorderLayout.NORTH);
+
         add(scrollPane, BorderLayout.CENTER);
 
-        sidePanel.add(innerPanel, BorderLayout.SOUTH);
+        ImageIcon addIcon = ResizeIcon.createResizedIcon("src/main/resources/icons/add-product.png", 50, 50);
+        JButton addButton = new JButton(addIcon);
+        addButton.setPreferredSize(new Dimension(40, 40));
+        addButton.setBackground(Color.RED);
+        addButton.setBorderPainted(false);
+        addButton.setFocusPainted(false);
+        addButton.addActionListener(e -> showAddProductDialog());
 
-        add(sidePanel, BorderLayout.SOUTH);
+        wideArea.add(addButton, BorderLayout.SOUTH);
     }
 
     private class CategoryButtonListener implements ActionListener {
@@ -139,11 +138,10 @@ public class ContentComponent extends JPanel {
     private JPanel createHeader() {
         JPanel headerPanel = new JPanel();
         headerPanel.setPreferredSize(new Dimension(700, 50));
-        headerPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        headerPanel.setLayout(new GridLayout(1, 5, 10, 10));
+        headerPanel.setLayout(new GridLayout(1, 5, 0, 0));
 
         for (Category category : Category.values()) {
-            JButton categoryButton = new JButton(category.getDescription());
+            CustomButton categoryButton = new CustomButton(category.getDescription(), Color.RED, Color.WHITE, 100, 30, 14);
             categoryButton.addActionListener(new CategoryButtonListener(category));
             headerPanel.add(categoryButton);
         }
@@ -152,8 +150,7 @@ public class ContentComponent extends JPanel {
     }
 
     private JPanel createWideArea() {
-        JPanel wideArea = new JPanel();
-        wideArea.setLayout(new GridLayout(0, 4, 10, 10));
+        JPanel wideArea = new JPanel(new GridLayout(0, 4, 10, 10));
         wideArea.setBackground(Color.GRAY);
     
         int externalMargin = 10;
@@ -171,25 +168,6 @@ public class ContentComponent extends JPanel {
         return wideArea;
     }
     
-
-    private JPanel createStandardArea() {
-        JPanel standardArea = new JPanel();
-        standardArea.setPreferredSize(new Dimension(700, 200));
-        standardArea.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        return standardArea;
-    }
-
-    private JPanel createNarrowArea() {
-        JPanel narrowArea = new JPanel();
-        narrowArea.setPreferredSize(new Dimension(300, 200));
-        narrowArea.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-
-        JButton addButton = new JButton("Adicionar Produto");
-        addButton.addActionListener(e -> showAddProductDialog());
-        narrowArea.add(addButton);
-
-        return narrowArea;
-    }
 
     private void showAddProductDialog() {
         JDialog dialog = new JDialog((Frame) null, "Adicionar Produto", true);

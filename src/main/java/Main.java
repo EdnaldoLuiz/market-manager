@@ -3,6 +3,7 @@ import javax.swing.SwingUtilities;
 
 import br.com.luiz.smktsystem.service.EmployeerService;
 import br.com.luiz.smktsystem.service.dao.EmployeerDAO;
+import br.com.luiz.smktsystem.service.dto.EmployeerRegisterDTO;
 import br.com.luiz.smktsystem.utils.JpaUtil;
 import br.com.luiz.smktsystem.view.panel.auth.LoginPanel;
 
