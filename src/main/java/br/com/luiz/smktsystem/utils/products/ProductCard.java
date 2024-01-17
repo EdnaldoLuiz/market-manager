@@ -78,7 +78,7 @@ public class ProductCard extends JPanel {
         infoPanel.add(editButton, BorderLayout.EAST);
 
         add(infoPanel, BorderLayout.SOUTH);
-        Border redBorder = BorderFactory.createLineBorder(Color.GRAY, 1);
+        Border redBorder = BorderFactory.createLineBorder(CustomColor.DARK_GRAY, 10);
         setBorder(redBorder);
     }
 

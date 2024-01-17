@@ -3,7 +3,6 @@ package br.com.luiz.smktsystem.view.panel;
 import javax.swing.*;
 
 import br.com.luiz.smktsystem.service.EmployeerService;
-import br.com.luiz.smktsystem.service.ProductService;
 import br.com.luiz.smktsystem.view.component.ContentComponent;
 import br.com.luiz.smktsystem.view.component.FooterComponent;
 import br.com.luiz.smktsystem.view.component.HeaderComponent;
@@ -13,7 +12,7 @@ import java.awt.*;
 
 public class MainPanel extends JPanel {
 
-    private EmployeerService employeerService;  // Certifique-se de declarar essa variável se ainda não estiver
+    private EmployeerService employeerService;
 
     public MainPanel(EmployeerService employeerService) {
         this.employeerService = employeerService;

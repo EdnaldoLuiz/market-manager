@@ -34,11 +34,13 @@ import br.com.luiz.smktsystem.view.panel.EmployeesPanel;
 public class ContentComponent extends JPanel {
 
     private JScrollPane scrollPane;
-    private JPanel wideArea;
     private List<ProductCard> productCards = new ArrayList<>();
+    private JPanel wideArea;
     private JPanel currentPanel;
+    private JPanel headerPanel;
 
     private JScrollPane createWideAreaScrollPane() {
+        setBackground(CustomColor.DARK_GRAY);
         wideArea = createWideArea();
         scrollPane = new JScrollPane(wideArea);
         scrollPane.setPreferredSize(new Dimension(990, 450));
@@ -74,6 +76,7 @@ public class ContentComponent extends JPanel {
 
     public ContentComponent() {
         setLayout(new BorderLayout(10, 10));
+        setBackground(CustomColor.DARK_GRAY);
 
         wideArea = createWideArea();
 
@@ -143,11 +146,11 @@ public class ContentComponent extends JPanel {
         JPanel wideArea = new JPanel(new BorderLayout());
         wideArea.setBackground(Color.GRAY);
 
-        JPanel headerPanel = createHeader();
+        headerPanel = createHeader();
         wideArea.add(headerPanel, BorderLayout.NORTH);
 
         JPanel productsPanel = new JPanel(new GridLayout(0, 4, 10, 10));
-        productsPanel.setBackground(CustomColor.MAIN_RED);
+        productsPanel.setBackground(CustomColor.DARK_GRAY);
 
         ProductService productService = new ProductService(new ProductDAO(JpaUtil.getEntityManager()));
         List<Product> products = productService.getAllProducts();
@@ -158,7 +161,6 @@ public class ContentComponent extends JPanel {
         }
 
         wideArea.add(productsPanel, BorderLayout.CENTER);
-        wideArea.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
 
         return wideArea;
     }
@@ -171,25 +173,52 @@ public class ContentComponent extends JPanel {
 
     public void updateView() {
         wideArea.removeAll();
+        productCards.clear();
 
+        wideArea.add(headerPanel, BorderLayout.NORTH);
+
+        JPanel productsPanel = new JPanel(new GridLayout(0, 4, 10, 10));
+        productsPanel.setBackground(CustomColor.DARK_GRAY);
         ProductService productService = new ProductService(new ProductDAO(JpaUtil.getEntityManager()));
         List<Product> products = productService.getAllProducts();
 
         for (Product product : products) {
             ProductRegisterDTO productDTO = ProductMapper.INSTANCE.entityToRegisterDTO(product);
-            wideArea.add(createProductCard(productDTO));
+            productsPanel.add(createProductCard(productDTO));
         }
+
+        wideArea.add(productsPanel, BorderLayout.CENTER);
+
+        adjustGrid(productsPanel, 4);
 
         scrollPane.setViewportView(wideArea);
         revalidate();
         repaint();
+    }
+
+    private void adjustGrid(JPanel panel, int itemsPerRow) {
+        int rows = (int) Math.ceil((double) panel.getComponentCount() / itemsPerRow);
+        GridLayout gridLayout = new GridLayout(rows, itemsPerRow, 10, 10);
+        panel.setLayout(gridLayout);
     }
 
     public void updateViewForNewProduct(ProductRegisterDTO newProductDTO) {
-        wideArea.add(createProductCard(newProductDTO));
-        JScrollPane scrollPane = createWideAreaScrollPane();
+        ProductCard productCard = createProductCard(newProductDTO);
+        wideArea.add(productCard);
+        productCards.add(productCard);
+
         scrollPane.setViewportView(wideArea);
         revalidate();
         repaint();
     }
+
+    public void removeProduct(ProductCard productCard) {
+        wideArea.remove(productCard);
+        productCards.remove(productCard);
+
+        scrollPane.setViewportView(wideArea);
+        revalidate();
+        repaint();
+    }
+
 }
