@@ -3,7 +3,7 @@ package br.com.luiz.smktsystem.view;
 import javax.swing.*;
 
 import br.com.luiz.smktsystem.service.EmployeerService;
-import br.com.luiz.smktsystem.view.panel.main.MainPanel;
+import br.com.luiz.smktsystem.view.panel.MainPanel;
 
 public class MainView extends JFrame {
     

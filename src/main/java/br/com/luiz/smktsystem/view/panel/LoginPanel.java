@@ -1,4 +1,4 @@
-package br.com.luiz.smktsystem.view.panel.auth;
+package br.com.luiz.smktsystem.view.panel;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -9,9 +9,9 @@ import javax.swing.*;
 import br.com.luiz.smktsystem.service.EmployeerService;
 import br.com.luiz.smktsystem.service.dao.AuthenticationListener;
 import br.com.luiz.smktsystem.service.dao.AuthenticationManager;
-import br.com.luiz.smktsystem.utils.ResizeIcon;
 import br.com.luiz.smktsystem.utils.javax.CustomButton;
-import br.com.luiz.smktsystem.view.panel.main.MainPanel;
+import br.com.luiz.smktsystem.utils.products.ResizeIcon;
+import br.com.luiz.smktsystem.view.dialog.ResetPasswordDialog;
 import br.com.luiz.smktsystem.view.shared.modal.Modal;
 
 public class LoginPanel extends JFrame implements AuthenticationListener {
@@ -177,7 +177,7 @@ public class LoginPanel extends JFrame implements AuthenticationListener {
         resetPasswordFrame.setSize(500, 450);
         resetPasswordFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         resetPasswordFrame.setLocationRelativeTo(null);
-        resetPasswordFrame.add(new ResetPasswordPanel(employeerService));
+        resetPasswordFrame.add(new ResetPasswordDialog(employeerService));
         resetPasswordFrame.setVisible(true);
     }
 }

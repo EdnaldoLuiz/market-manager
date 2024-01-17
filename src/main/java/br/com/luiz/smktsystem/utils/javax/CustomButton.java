@@ -11,6 +11,7 @@ public class CustomButton extends JButton {
         setPreferredSize(new Dimension(width, height));
         setBackground(backgroundColor);
         setForeground(foregroundColor);
+        setBorder(null);
         setFont(new Font("Arial", Font.BOLD, fontSize));
     }
 

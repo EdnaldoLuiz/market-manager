@@ -1,4 +1,4 @@
-package br.com.luiz.smktsystem.utils;
+package br.com.luiz.smktsystem.utils.products;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -7,6 +7,7 @@ import br.com.luiz.smktsystem.app.enums.Category;
 import br.com.luiz.smktsystem.service.ProductService;
 import br.com.luiz.smktsystem.service.dao.ProductDAO;
 import br.com.luiz.smktsystem.service.dto.ProductRegisterDTO;
+import br.com.luiz.smktsystem.utils.hibernate.JpaUtil;
 import br.com.luiz.smktsystem.utils.javax.CustomButton;
 import br.com.luiz.smktsystem.utils.javax.CustomColor;
 import br.com.luiz.smktsystem.view.component.ContentComponent;
@@ -77,7 +78,7 @@ public class ProductCard extends JPanel {
         infoPanel.add(editButton, BorderLayout.EAST);
 
         add(infoPanel, BorderLayout.SOUTH);
-        Border redBorder = BorderFactory.createLineBorder(Color.GRAY, 10);
+        Border redBorder = BorderFactory.createLineBorder(Color.GRAY, 1);
         setBorder(redBorder);
     }
 

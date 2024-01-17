@@ -3,8 +3,6 @@ package br.com.luiz.smktsystem.utils.hibernate;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import br.com.luiz.smktsystem.utils.JpaUtil;
-
 public class TransactionManager {
 
     public static void performTransaction(Operation operation) {

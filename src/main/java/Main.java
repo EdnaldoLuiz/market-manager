@@ -4,8 +4,8 @@ import javax.swing.SwingUtilities;
 import br.com.luiz.smktsystem.service.EmployeerService;
 import br.com.luiz.smktsystem.service.dao.EmployeerDAO;
 import br.com.luiz.smktsystem.service.dto.EmployeerRegisterDTO;
-import br.com.luiz.smktsystem.utils.JpaUtil;
-import br.com.luiz.smktsystem.view.panel.auth.LoginPanel;
+import br.com.luiz.smktsystem.utils.hibernate.JpaUtil;
+import br.com.luiz.smktsystem.view.panel.LoginPanel;
 
 public class Main {
     public static void main(String[] args) {

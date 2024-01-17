@@ -1,4 +1,4 @@
-package br.com.luiz.smktsystem.view.panel.employee;
+package br.com.luiz.smktsystem.view.panel;
 
 import br.com.luiz.smktsystem.service.EmployeerService;
 import br.com.luiz.smktsystem.service.dto.EmployeerListDTO;
@@ -6,6 +6,8 @@ import br.com.luiz.smktsystem.service.dto.EmployeerListDTO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
 import java.awt.*;
 import java.text.NumberFormat;
 import java.util.List;
@@ -33,8 +35,10 @@ public class EmployeesPanel extends JPanel {
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         employeesTable.setDefaultRenderer(Object.class, centerRenderer);
 
-        JScrollPane scrollPane = new JScrollPane(employeesTable);
+        JTableHeader tableHeader = employeesTable.getTableHeader();
+        tableHeader.setFont(new Font("Arial", Font.BOLD, 18));
 
+        JScrollPane scrollPane = new JScrollPane(employeesTable);
         add(scrollPane, BorderLayout.CENTER);
     }
 
@@ -42,12 +46,12 @@ public class EmployeesPanel extends JPanel {
         List<EmployeerListDTO> employeeList = employeerService.listEmployeers();
 
         DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Name");
+        model.addColumn("Nome");
         model.addColumn("Email");
         model.addColumn("CPF");
 
         for (EmployeerListDTO employee : employeeList) {
-            model.addRow(new Object[]{employee.getName(), employee.getEmail(), formatCPF(employee.getCpf())});
+            model.addRow(new Object[] { employee.getName(), employee.getEmail(), formatCPF(employee.getCpf()) });
         }
 
         employeesTable.setModel(model);
@@ -60,7 +64,8 @@ public class EmployeesPanel extends JPanel {
             cpfFormat.setMinimumIntegerDigits(9);
             cpfFormat.setGroupingUsed(false);
             String formattedCPF = cpfFormat.format(cpfNumber);
-            return formattedCPF.substring(0, 3) + "." + formattedCPF.substring(3, 6) + "." + formattedCPF.substring(6, 9) + "-" + formattedCPF.substring(9);
+            return formattedCPF.substring(0, 3) + "." + formattedCPF.substring(3, 6) + "."
+                    + formattedCPF.substring(6, 9) + "-" + formattedCPF.substring(9);
         } catch (NumberFormatException e) {
             e.printStackTrace();
             return cpf;

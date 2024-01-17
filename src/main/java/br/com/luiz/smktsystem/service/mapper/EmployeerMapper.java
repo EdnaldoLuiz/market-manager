@@ -15,15 +15,18 @@ public interface EmployeerMapper {
     EmployeerMapper INSTANCE = Mappers.getMapper(EmployeerMapper.class);
 
     @Mapping(target = "id", ignore = true) 
+    @Mapping(target = "role", ignore = true) 
     Employeer registerToEntity(EmployeerRegisterDTO dto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "cpf", ignore = true)
     @Mapping(target = "name", ignore = true)
+    @Mapping(target = "role", ignore = true) 
     Employeer loginToToEntity(EmployeerLoginDTO dto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", ignore = true)
+    @Mapping(target = "role", ignore = true) 
     Employeer listToEntity(EmployeerListDTO dto);
 
     @Mapping(source = "name", target = "name")

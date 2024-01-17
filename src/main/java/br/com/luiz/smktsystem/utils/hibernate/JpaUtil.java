@@ -1,4 +1,4 @@
-package br.com.luiz.smktsystem.utils;
+package br.com.luiz.smktsystem.utils.hibernate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

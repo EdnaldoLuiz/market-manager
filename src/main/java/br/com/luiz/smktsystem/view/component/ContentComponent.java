@@ -3,26 +3,17 @@ package br.com.luiz.smktsystem.view.component;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import br.com.luiz.smktsystem.app.enums.Category;
 import br.com.luiz.smktsystem.app.model.Product;
@@ -32,13 +23,13 @@ import br.com.luiz.smktsystem.service.dao.EmployeerDAO;
 import br.com.luiz.smktsystem.service.dao.ProductDAO;
 import br.com.luiz.smktsystem.service.dto.ProductRegisterDTO;
 import br.com.luiz.smktsystem.service.mapper.ProductMapper;
-import br.com.luiz.smktsystem.utils.ImageByteUtil;
-import br.com.luiz.smktsystem.utils.JpaUtil;
-import br.com.luiz.smktsystem.utils.ProductCard;
-import br.com.luiz.smktsystem.utils.ResizeIcon;
+import br.com.luiz.smktsystem.utils.hibernate.JpaUtil;
 import br.com.luiz.smktsystem.utils.javax.CustomButton;
-import br.com.luiz.smktsystem.utils.javax.CustomScrollbar;
-import br.com.luiz.smktsystem.view.panel.employee.EmployeesPanel;
+import br.com.luiz.smktsystem.utils.javax.CustomColor;
+import br.com.luiz.smktsystem.utils.products.ProductCard;
+import br.com.luiz.smktsystem.utils.products.ResizeIcon;
+import br.com.luiz.smktsystem.view.dialog.AddProductDialog;
+import br.com.luiz.smktsystem.view.panel.EmployeesPanel;
 
 public class ContentComponent extends JPanel {
 
@@ -51,9 +42,7 @@ public class ContentComponent extends JPanel {
         wideArea = createWideArea();
         scrollPane = new JScrollPane(wideArea);
         scrollPane.setPreferredSize(new Dimension(990, 450));
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.getVerticalScrollBar().setUI(new CustomScrollbar());
-        scrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 
         int spacing = 14;
         scrollPane.setBorder(BorderFactory.createEmptyBorder(spacing, spacing, spacing, spacing));
@@ -141,7 +130,8 @@ public class ContentComponent extends JPanel {
         headerPanel.setLayout(new GridLayout(1, 5, 0, 0));
 
         for (Category category : Category.values()) {
-            CustomButton categoryButton = new CustomButton(category.getDescription(), Color.RED, Color.WHITE, 100, 30, 14);
+            CustomButton categoryButton = new CustomButton(category.getDescription(), Color.RED, Color.WHITE, 100, 30,
+                    14);
             categoryButton.addActionListener(new CategoryButtonListener(category));
             headerPanel.add(categoryButton);
         }
@@ -150,96 +140,33 @@ public class ContentComponent extends JPanel {
     }
 
     private JPanel createWideArea() {
-        JPanel wideArea = new JPanel(new GridLayout(0, 4, 10, 10));
+        JPanel wideArea = new JPanel(new BorderLayout());
         wideArea.setBackground(Color.GRAY);
-    
-        int externalMargin = 10;
-        wideArea.setBorder(BorderFactory.createEmptyBorder(externalMargin, externalMargin, externalMargin, externalMargin));
-    
+
+        JPanel headerPanel = createHeader();
+        wideArea.add(headerPanel, BorderLayout.NORTH);
+
+        JPanel productsPanel = new JPanel(new GridLayout(0, 4, 10, 10));
+        productsPanel.setBackground(CustomColor.MAIN_RED);
+
         ProductService productService = new ProductService(new ProductDAO(JpaUtil.getEntityManager()));
         List<Product> products = productService.getAllProducts();
-    
+
         for (Product product : products) {
             ProductRegisterDTO productDTO = ProductMapper.INSTANCE.entityToRegisterDTO(product);
-            wideArea.add(createProductCard(productDTO));
+            productsPanel.add(createProductCard(productDTO));
         }
+
+        wideArea.add(productsPanel, BorderLayout.CENTER);
         wideArea.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-    
+
         return wideArea;
     }
-    
 
     private void showAddProductDialog() {
-        JDialog dialog = new JDialog((Frame) null, "Adicionar Produto", true);
-        dialog.setLayout(new BorderLayout());
-
-        JPanel inputPanel = new JPanel(new GridLayout(4, 2, 10, 10));
-        inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        JTextField productNameField = new JTextField();
-        JTextField priceField = new JTextField();
-        JTextField quantityField = new JTextField();
-        JButton chooseImageButton = new JButton("Escolher Imagem");
-
-        inputPanel.add(new JLabel("Nome do Produto:"));
-        inputPanel.add(productNameField);
-        inputPanel.add(new JLabel("Preço do Produto:"));
-        inputPanel.add(priceField);
-        inputPanel.add(new JLabel("Quantidade do Produto:"));
-        inputPanel.add(quantityField);
-        inputPanel.add(new JLabel("Imagem do Produto:"));
-        inputPanel.add(chooseImageButton);
-
-        JButton addButton = new JButton("Adicionar");
-        addButton.addActionListener(e -> {
-            try {
-                String productName = productNameField.getText();
-                double price = Double.parseDouble(priceField.getText());
-                int quantity = Integer.parseInt(quantityField.getText());
-
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Escolha uma imagem");
-                fileChooser.setFileFilter(new FileNameExtensionFilter("Imagens", "jpg", "jpeg", "png", "gif"));
-
-                int userSelection = fileChooser.showOpenDialog(dialog);
-
-                if (userSelection == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    byte[] imageBytes = ImageByteUtil.encode(selectedFile.getAbsolutePath());
-
-                    ProductRegisterDTO registerDTO = new ProductRegisterDTO();
-                    registerDTO.setProductName(productName);
-                    registerDTO.setProductPrice(price);
-                    registerDTO.setProductQuantity(quantity);
-                    registerDTO.setCategory(Category.FOOD);
-                    registerDTO.setImage(imageBytes);
-
-                    updateViewForNewProduct(registerDTO);
-
-                    ProductService productService = new ProductService(new ProductDAO(JpaUtil.getEntityManager()));
-                    productService.registerProduct(registerDTO);
-                    JOptionPane.showMessageDialog(dialog, "Produto cadastrado com sucesso!");
-                    dialog.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(dialog, "Operação cancelada. Nenhuma imagem selecionada.");
-                }
-            } catch (NumberFormatException | IOException ex) {
-                JOptionPane.showMessageDialog(dialog, "Por favor, insira valores válidos para preço e quantidade.");
-            }
-        });
-
-        dialog.add(inputPanel, BorderLayout.CENTER);
-        dialog.add(addButton, BorderLayout.SOUTH);
-
-        chooseImageButton.addActionListener(e -> {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle("Escolha uma imagem");
-            fileChooser.setFileFilter(new FileNameExtensionFilter("Imagens", "jpg", "jpeg", "png", "gif"));
-        });
-
-        dialog.setSize(new Dimension(400, 250));
-        dialog.setLocationRelativeTo(this);
+        AddProductDialog dialog = new AddProductDialog((Frame) null, "Adicionar Produto", true);
         dialog.setVisible(true);
+        updateView();
     }
 
     public void updateView() {

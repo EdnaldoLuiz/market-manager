@@ -1,18 +1,18 @@
-package br.com.luiz.smktsystem.view.panel.auth;
+package br.com.luiz.smktsystem.view.dialog;
 
 import javax.swing.*;
 import br.com.luiz.smktsystem.service.EmployeerService;
-import br.com.luiz.smktsystem.utils.ResizeIcon;
 import br.com.luiz.smktsystem.utils.javax.CustomButton;
+import br.com.luiz.smktsystem.utils.products.ResizeIcon;
 import br.com.luiz.smktsystem.view.shared.modal.Modal;
 
 import java.awt.*;
 
-public class ResetPasswordPanel extends JPanel {
+public class ResetPasswordDialog extends JPanel {
 
     private EmployeerService employeerService;
 
-    public ResetPasswordPanel(EmployeerService employeerService) {
+    public ResetPasswordDialog(EmployeerService employeerService) {
         this.employeerService = employeerService;
         initComponents();
     }

@@ -1,4 +1,4 @@
-package br.com.luiz.smktsystem.utils;
+package br.com.luiz.smktsystem.utils.products;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;

@@ -1,4 +1,4 @@
-package br.com.luiz.smktsystem.utils;
+package br.com.luiz.smktsystem.utils.products;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;

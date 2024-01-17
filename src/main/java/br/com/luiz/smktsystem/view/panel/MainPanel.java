@@ -1,4 +1,4 @@
-package br.com.luiz.smktsystem.view.panel.main;
+package br.com.luiz.smktsystem.view.panel;
 
 import javax.swing.*;
 

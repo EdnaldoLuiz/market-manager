@@ -6,8 +6,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.border.EmptyBorder;
 
-import br.com.luiz.smktsystem.utils.ResizeIcon;
 import br.com.luiz.smktsystem.utils.javax.CustomColor;
+import br.com.luiz.smktsystem.utils.products.ResizeIcon;
 
 public class SidebarComponent extends JPanel {
 
@@ -29,9 +29,6 @@ public class SidebarComponent extends JPanel {
 
         add(createOption("Funcionarios",
                 ResizeIcon.createResizedIcon("src/main/resources/icons/employee.png", 30, 30)));
-
-        add(createOption("Estatisticas", ResizeIcon.createResizedIcon("src/main/resources/icons/info.png", 30, 30)));
-        add(createOption("Configuração", ResizeIcon.createResizedIcon("src/main/resources/icons/config.png", 30, 30)));
     }
 
     private JPanel createOption(String text, ImageIcon icon) {
