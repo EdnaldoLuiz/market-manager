@@ -1,5 +1,6 @@
 package br.com.luiz.smktsystem.app.model;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.Lob;
 import org.hibernate.annotations.Type;
 
 import br.com.luiz.smktsystem.app.enums.Category;
+import br.com.luiz.smktsystem.service.dto.ProductRegisterDTO;
 
 @Entity
 public class Product {
@@ -18,10 +20,11 @@ public class Product {
     @Id
     @GeneratedValue(generator = "UUID")
     private UUID id;
-    private String productName;
-    private Double productPrice;
-    private Integer productQuantity;
+    private String name;
+    private BigDecimal price;
+    private Integer quantity;
     private Category category;
+    private BigDecimal totalPrice;
 
     @Lob
     @Type(type="org.hibernate.type.BinaryType")
@@ -29,44 +32,43 @@ public class Product {
 
     public Product() {}
 
-    public Product(String productName, Double productPrice, Integer productQuantity, Category category, byte[] image) {
-        this.productName = productName;
-        this.productPrice = productPrice;
-        this.productQuantity = productQuantity;
-        this.category = category;
-        this.image = image;
+    public Product(ProductRegisterDTO product) {
+        this.name = product.getName();
+        this.price = product.getPrice();
+        this.quantity = product.getQuantity();
+        this.category = product.getCategory();
+        this.image = product.getImage();
+        totalPrice = totalPrice();
     }
 
-    public UUID getId() {
-        return id;
-    }
-    
-    public void setId(UUID id) {
-        this.id = id;
+    private BigDecimal totalPrice() {
+        return price.multiply(BigDecimal.valueOf(quantity));
     }
 
-    public String getProductName() {
-        return productName;
+    public String getName() {
+        return name;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Double getProductPrice() {
-        return productPrice;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setProductPrice(Double productPrice) {
-        this.productPrice = productPrice;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+        this.totalPrice = totalPrice();
     }
 
-    public Integer getProductQuantity() {
-        return productQuantity;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setProductQuantity(Integer productQuantity) {
-        this.productQuantity = productQuantity;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+        this.totalPrice = totalPrice();
     }
 
     public Category getCategory() {
@@ -75,6 +77,14 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public byte[] getImage() {

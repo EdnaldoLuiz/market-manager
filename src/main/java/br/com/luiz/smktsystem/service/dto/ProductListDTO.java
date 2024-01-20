@@ -2,15 +2,21 @@ package br.com.luiz.smktsystem.service.dto;
 
 import java.math.BigDecimal;
 
-import br.com.luiz.smktsystem.app.enums.Category;
-
-public class ProductRegisterDTO {
-
+public class ProductListDTO {
+    
     private String name;
     private BigDecimal price;
     private Integer quantity;
-    private Category category;
-    private byte[] image;
+    private BigDecimal totalPrice;
+
+    public ProductListDTO() {}
+    
+    public ProductListDTO(String name, BigDecimal price, Integer quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.totalPrice = price.multiply(new BigDecimal(quantity));
+    }
 
     public String getName() {
         return name;
@@ -36,19 +42,7 @@ public class ProductRegisterDTO {
         this.quantity = quantity;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
+    public BigDecimal getTotalPrice() {
+        return price.multiply(BigDecimal.valueOf(quantity));
+    }    
 }

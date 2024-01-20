@@ -2,10 +2,15 @@ package br.com.luiz.smktsystem.service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
+import br.com.luiz.smktsystem.app.model.Employeer;
 import br.com.luiz.smktsystem.app.model.Product;
 import br.com.luiz.smktsystem.service.dao.ProductDAO;
+import br.com.luiz.smktsystem.service.dto.EmployeerListDTO;
+import br.com.luiz.smktsystem.service.dto.ProductListDTO;
 import br.com.luiz.smktsystem.service.dto.ProductRegisterDTO;
+import br.com.luiz.smktsystem.service.mapper.EmployeerMapper;
 import br.com.luiz.smktsystem.service.mapper.ProductMapper;
 
 public class ProductService {
@@ -17,7 +22,7 @@ public class ProductService {
     }
 
     public void registerProduct(ProductRegisterDTO registerDTO) {
-        Product product = ProductMapper.INSTANCE.registerToEntity(registerDTO);
+        Product product = new Product(registerDTO);
         productDAO.createProduct(product);
     }
 
@@ -33,12 +38,19 @@ public class ProductService {
         Product existingProduct = productDAO.findProductById(productId);
         
         if (existingProduct != null) {
-            existingProduct.setProductName(updatedProductDTO.getProductName());
-            existingProduct.setProductPrice(updatedProductDTO.getProductPrice());
-            existingProduct.setProductQuantity(updatedProductDTO.getProductQuantity());
+            existingProduct.setName(updatedProductDTO.getName());
+            existingProduct.setPrice(updatedProductDTO.getPrice());
+            existingProduct.setQuantity(updatedProductDTO.getQuantity());
             existingProduct.setCategory(updatedProductDTO.getCategory());
             productDAO.updateProduct(existingProduct);
         }
+    }
+
+    public List<ProductListDTO> listProducts() {
+        List<Product> products = productDAO.getAllProducts();
+        return products.stream()
+                .map(employeer -> ProductMapper.INSTANCE.entityToListDTO(employeer))
+                .collect(Collectors.toList());
     }
 }
 

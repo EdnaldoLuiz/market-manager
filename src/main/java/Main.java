@@ -1,3 +1,5 @@
+import java.math.BigDecimal;
+
 import javax.persistence.EntityManager;
 import javax.swing.SwingUtilities;
 
@@ -17,6 +19,15 @@ public class Main {
         EmployeerDAO employeerDAO = new EmployeerDAO(entityManager);
         EmployeerService employeerService = new EmployeerService(employeerDAO);
         SwingUtilities.invokeLater(() -> new LoginPanel(employeerService));
+
+        ProductDAO productDAO = new ProductDAO(entityManager);
+        ProductService  productService = new ProductService(productDAO);
+        ProductRegisterDTO registerDTO = new ProductRegisterDTO();
+        registerDTO.setName("Pão");
+        registerDTO.setPrice(new BigDecimal(3.0));
+        registerDTO.setQuantity(10);
+        registerDTO.setCategory(Category.FOOD);
+        productService.registerProduct(registerDTO);
     }
 }
 

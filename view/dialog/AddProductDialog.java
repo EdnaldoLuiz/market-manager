@@ -9,7 +9,6 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 
 import br.com.luiz.smktsystem.app.enums.Category;
 import br.com.luiz.smktsystem.service.ProductService;
@@ -65,7 +64,7 @@ public class AddProductDialog extends JDialog {
     private void addProduct() {
         try {
             String productName = productNameField.getText();
-            BigDecimal price = new BigDecimal(Double.parseDouble(priceField.getText()));
+            double price = Double.parseDouble(priceField.getText());
             int quantity = Integer.parseInt(quantityField.getText());
 
             JFileChooser fileChooser = new JFileChooser();
@@ -79,9 +78,9 @@ public class AddProductDialog extends JDialog {
                 byte[] imageBytes = ImageByteUtil.encode(selectedFile.getAbsolutePath());
 
                 ProductRegisterDTO registerDTO = new ProductRegisterDTO();
-                registerDTO.setName(productName);
-                registerDTO.setPrice(price);
-                registerDTO.setQuantity(quantity);
+                registerDTO.setProductName(productName);
+                registerDTO.setProductPrice(price);
+                registerDTO.setProductQuantity(quantity);
                 registerDTO.setCategory(Category.FOOD);
                 registerDTO.setImage(imageBytes);
 

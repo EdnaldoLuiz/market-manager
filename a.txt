@@ -1,0 +1,14 @@
+private JPanel createHeader() {
+        JPanel headerPanel = new JPanel();
+        headerPanel.setPreferredSize(new Dimension(700, 50));
+        headerPanel.setLayout(new GridLayout(1, 5, 0, 0));
+
+        for (Category category : Category.values()) {
+            CustomButton categoryButton = new CustomButton(category.getDescription(), Color.RED, Color.WHITE, 100, 30,
+                    14);
+            categoryButton.addActionListener(new CategoryButtonListener(category));
+            headerPanel.add(categoryButton);
+        }
+
+        return headerPanel;
+    }
