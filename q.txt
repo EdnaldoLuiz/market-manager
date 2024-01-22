@@ -1,0 +1,18 @@
+----------------------------------------
+PRODUTO        PREÇO    CATEGORIA    QTD
+----------------------------------------
+Arroz          R$ 2.00  Alimento     3
+Feijão         R$ 4.00  Alimento     7
+Macarrão       R$ 2.00  Alimento     2
+Farinha        R$ 4.00  Alimento     5
+Óleo           R$ 5.00  Alimento     9
+Sabão          R$ 2.00  Limpeza      6
+Detergente     R$ 7.00  Limpeza      1
+Amaciante      R$ 5.00  Limpeza      4
+Grampeador     R$ 9.00  Escritório   8
+Caneta         R$ 0.50  Escritório   9
+Caderno        R$ 8.00  Escritório   7
+Leite          R$ 7.00  Alimento     2
+Sabão          R$ 2.50  Limpeza      5
+Papel          R$ 7.00  Escritório   3
+----------------------------------------

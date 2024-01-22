@@ -1,106 +1,100 @@
 package br.com.luiz.smktsystem.view.dialog;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.GridLayout;
-import java.io.File;
-import java.io.IOException;
-import java.math.BigDecimal;
 
 import br.com.luiz.smktsystem.app.enums.Category;
 import br.com.luiz.smktsystem.service.ProductService;
-import br.com.luiz.smktsystem.service.dao.ProductDAO;
 import br.com.luiz.smktsystem.service.dto.ProductRegisterDTO;
-import br.com.luiz.smktsystem.service.mapper.ProductMapper;
-import br.com.luiz.smktsystem.utils.hibernate.JpaUtil;
-import br.com.luiz.smktsystem.utils.products.ImageByteUtil;
-import br.com.luiz.smktsystem.utils.products.ResizeIcon;
+import br.com.luiz.smktsystem.utils.javax.CustomButton;
+import br.com.luiz.smktsystem.utils.javax.CustomColor;
 
-public class AddProductDialog extends JDialog {
+import java.awt.*;
+import java.math.BigDecimal;
 
-    private JTextField productNameField;
+public class AddProductDialog extends JFrame {
+
+    private JTextField nameField;
     private JTextField priceField;
     private JTextField quantityField;
+    private JComboBox<String> categoryComboBox;
+    private ProductService service;
 
-    public AddProductDialog(Frame owner, String title, boolean modal) {
-        super(owner, title, modal);
-        initializeUI();
-    }
+    public AddProductDialog(ProductService service) {
+        this.service = service;
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
-    private void initializeUI() {
-        JPanel inputPanel = new JPanel(new GridLayout(4, 2, 10, 10));
-        inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        productNameField = new JTextField();
-        priceField = new JTextField();
-        quantityField = new JTextField();
-        JButton chooseImageButton = new JButton("Escolher Imagem");
-
-        inputPanel.add(new JLabel("Nome do Produto:"));
-        inputPanel.add(productNameField);
-        inputPanel.add(new JLabel("Preço do Produto:"));
-        inputPanel.add(priceField);
-        inputPanel.add(new JLabel("Quantidade do Produto:"));
-        inputPanel.add(quantityField);
-        inputPanel.add(new JLabel("Imagem do Produto:"));
-        inputPanel.add(chooseImageButton);
-
-        JButton addButton = new JButton("Adicionar");
-        addButton.addActionListener(e -> addProduct());
-        
-        chooseImageButton.addActionListener(e -> chooseImage());
-
-        setLayout(new BorderLayout());
-        add(inputPanel, BorderLayout.CENTER);
-        add(addButton, BorderLayout.SOUTH);
-
-        setSize(new Dimension(400, 250));
+        pack();
         setLocationRelativeTo(null);
+        setSize(600, 400);
+
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(10, 10, 10, 10);
+
+        Font font = new Font("Arial", Font.PLAIN, 18);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        JLabel nameLabel = new JLabel("Nome:");
+        nameLabel.setFont(font);
+        add(nameLabel, gbc);
+        nameField = new JTextField(20);
+        nameField.setFont(font);
+        gbc.gridx = 1;
+        add(nameField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        JLabel priceLabel = new JLabel("Preço:");
+        priceLabel.setFont(font);
+        add(priceLabel, gbc);
+        priceField = new JTextField(20);
+        priceField.setFont(font);
+        gbc.gridx = 1;
+        add(priceField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        JLabel quantityLabel = new JLabel("Quantidade:");
+        quantityLabel.setFont(font);
+        add(quantityLabel, gbc);
+        quantityField = new JTextField(20);
+        quantityField.setFont(font);
+        gbc.gridx = 1;
+        add(quantityField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        JLabel categoryLabel = new JLabel("Categoria:");
+        categoryLabel.setFont(font);
+        add(categoryLabel, gbc);
+        categoryComboBox = new JComboBox<>();
+        categoryComboBox.setFont(font);
+        for (Category category : Category.values()) {
+            categoryComboBox.addItem(category.getDescription());
+        }
+        gbc.gridx = 1;
+        add(categoryComboBox, gbc);
+
+        CustomButton addButton = new CustomButton("Adicionar Produto", CustomColor.MAIN_RED, Color.WHITE, 170, 40, 18,
+                e -> addProduct());
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        add(addButton, gbc);
     }
 
     private void addProduct() {
-        try {
-            String productName = productNameField.getText();
-            BigDecimal price = new BigDecimal(Double.parseDouble(priceField.getText()));
-            int quantity = Integer.parseInt(quantityField.getText());
+        String name = nameField.getText();
+        BigDecimal price = new BigDecimal(priceField.getText());
+        int quantity = Integer.parseInt(quantityField.getText());
+        Category category = Category.fromDescription((String) categoryComboBox.getSelectedItem());
 
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle("Escolha uma imagem");
-            fileChooser.setFileFilter(new FileNameExtensionFilter("Imagens", "jpg", "jpeg", "png", "gif"));
-
-            int userSelection = fileChooser.showOpenDialog(this);
-
-            if (userSelection == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = fileChooser.getSelectedFile();
-                byte[] imageBytes = ImageByteUtil.encode(selectedFile.getAbsolutePath());
-
-                ProductRegisterDTO registerDTO = new ProductRegisterDTO();
-                registerDTO.setName(productName);
-                registerDTO.setPrice(price);
-                registerDTO.setQuantity(quantity);
-                registerDTO.setCategory(Category.FOOD);
-                registerDTO.setImage(imageBytes);
-
-                ProductService productService = new ProductService(new ProductDAO(JpaUtil.getEntityManager()));
-                productService.registerProduct(registerDTO);
-                JOptionPane.showMessageDialog(this, "Produto cadastrado com sucesso!");
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "Operação cancelada. Nenhuma imagem selecionada.");
-            }
-        } catch (NumberFormatException | IOException ex) {
-            JOptionPane.showMessageDialog(this, "Por favor, insira valores válidos para preço e quantidade.");
-        }
-    }
-
-    private void chooseImage() {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Escolha uma imagem");
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Imagens", "jpg", "jpeg", "png", "gif"));
-        fileChooser.showOpenDialog(this);
+        ProductRegisterDTO registerDTO = new ProductRegisterDTO(name, price, quantity, category);
+        service.registerProduct(registerDTO);
+        nameField.setText("");
+        priceField.setText("");
+        quantityField.setText("");
+        categoryComboBox.setSelectedIndex(0);
     }
 }

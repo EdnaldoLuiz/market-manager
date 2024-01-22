@@ -72,4 +72,11 @@ public class Modal {
         textArea.setLineWrap(true);
         textArea.setEditable(false);
     }
+
+    public static void showAdminDialog(Component parentComponent) {
+        ImageIcon adminIcon = createResizedIcon("src/main/resources/icons/cart.png", 100, 100);
+        JLabel iconLabel = new JLabel(adminIcon);
+        String adminMessage = "      Você está logado como administrador.";
+        showCustomDialog(parentComponent, iconLabel, adminMessage, CustomColor.SUCESS_GREEN);
+    }
 }

@@ -13,6 +13,7 @@ import br.com.luiz.smktsystem.service.mapper.EmployeerMapper;
 public class EmployeerService {
 
     private EmployeerDAO employeerDAO;
+    private Employeer authenticatedUser;
 
     public EmployeerService(EmployeerDAO employeerDAO) {
         this.employeerDAO = employeerDAO;
@@ -35,9 +36,14 @@ public class EmployeerService {
         Employeer storedEmployeer = employeerDAO.findEmployeerByEmail(employeer.getEmail());
         boolean validPassword = storedEmployeer != null && storedEmployeer.getPassword().equals(employeer.getPassword());
         if (validPassword) {
+            authenticatedUser = storedEmployeer;
             return storedEmployeer;
         } 
         return null;
+    }
+
+    public Employeer getAuthenticatedUser() {
+        return authenticatedUser;
     }
 
     public boolean isEmailOnDatabase(String email) {

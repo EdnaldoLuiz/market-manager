@@ -3,7 +3,6 @@ package br.com.luiz.smktsystem.app.model;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -37,7 +36,6 @@ public class Product {
         this.price = product.getPrice();
         this.quantity = product.getQuantity();
         this.category = product.getCategory();
-        this.image = product.getImage();
         totalPrice = totalPrice();
     }
 
@@ -85,13 +83,5 @@ public class Product {
 
     public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
     }
 }

@@ -10,7 +10,13 @@ public class ProductRegisterDTO {
     private BigDecimal price;
     private Integer quantity;
     private Category category;
-    private byte[] image;
+
+    public ProductRegisterDTO(String name, BigDecimal price, Integer quantity, Category category) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.category = category;
+    }
 
     public String getName() {
         return name;
@@ -42,13 +48,5 @@ public class ProductRegisterDTO {
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
     }
 }

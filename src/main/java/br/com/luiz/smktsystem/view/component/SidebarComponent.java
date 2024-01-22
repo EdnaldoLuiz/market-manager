@@ -6,6 +6,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.border.EmptyBorder;
 
+import br.com.luiz.smktsystem.app.enums.Role;
+import br.com.luiz.smktsystem.app.model.Employeer;
+import br.com.luiz.smktsystem.service.EmployeerService;
 import br.com.luiz.smktsystem.utils.javax.CustomColor;
 import br.com.luiz.smktsystem.utils.products.ResizeIcon;
 
@@ -13,8 +16,10 @@ public class SidebarComponent extends JPanel {
 
     private JPanel selectedOption = null;
     private ContentComponent contentComponent;
+    private EmployeerService employeerService;
 
-    public SidebarComponent(ContentComponent contentComponent) {
+    public SidebarComponent(ContentComponent contentComponent, EmployeerService employeerService) {
+        this.employeerService = employeerService;
         this.contentComponent = contentComponent;
         setBackground(Color.RED);
         setPreferredSize(new Dimension(250, getHeight()));
@@ -27,8 +32,11 @@ public class SidebarComponent extends JPanel {
         add(mercadoriasOption);
         selectOption(mercadoriasOption);
 
-        add(createOption("Funcionarios",
-                ResizeIcon.createResizedIcon("src/main/resources/icons/employee.png", 30, 30)));
+        Employeer authenticatedUser = employeerService.getAuthenticatedUser(); 
+        if (authenticatedUser.getRole() == Role.ADMIN) { 
+            add(createOption("Funcionarios",
+                    ResizeIcon.createResizedIcon("src/main/resources/icons/employee.png", 30, 30)));
+        }
     }
 
     private JPanel createOption(String text, ImageIcon icon) {

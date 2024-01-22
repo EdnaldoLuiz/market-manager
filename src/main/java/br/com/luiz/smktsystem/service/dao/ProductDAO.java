@@ -5,8 +5,11 @@ import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
+import br.com.luiz.smktsystem.app.enums.Category;
 import br.com.luiz.smktsystem.app.model.Product;
 
 public class ProductDAO {
@@ -56,14 +59,27 @@ public class ProductDAO {
         }
     }
 
-    public void deleteProduct(UUID id) {
-        EntityTransaction transaction = entityManager.getTransaction();
+    public Product findProductByName(String name) {
+        try {
+            TypedQuery<Product> query = entityManager.createQuery("SELECT p FROM Product p WHERE p.name = :name",
+                    Product.class);
+            query.setParameter("name", name);
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 
+    public void deleteProduct(String name) {
+        EntityTransaction transaction = entityManager.getTransaction();
+    
         try {
             transaction.begin();
-            Product product = entityManager.find(Product.class, id);
-            entityManager.remove(product);
-            transaction.commit();
+            Product product = findProductByName(name);
+            if (product != null) {
+                entityManager.remove(product);
+                transaction.commit();
+            }
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
@@ -83,4 +99,15 @@ public class ProductDAO {
         }
     }
 
+    public List<Product> getProductsByCategory(Category category) {
+        try {
+            String jpql = "SELECT p FROM Product p WHERE p.category = :category";
+            Query query = entityManager.createQuery(jpql, Product.class);
+            query.setParameter("category", category);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

@@ -4,9 +4,8 @@ public enum Category {
         
         FOOD("Alimentos"),
         CLEANING("Limpeza"),
-        HYGIENE("Higiene"),
         OFFICE("Escritório"),
-        OTHERS("Outros");
+        ALL("Todos");
     
         private String description;
     
@@ -17,5 +16,13 @@ public enum Category {
         public String getDescription() {
             return description;
         }
-    
+
+        public static Category fromDescription(String description) {
+            for (Category category : Category.values()) {
+                if (category.getDescription().equals(description)) {
+                    return category;
+                }
+            }
+            throw new IllegalArgumentException("No enum constant " + Category.class.getCanonicalName() + " with description " + description);
+        }
 }

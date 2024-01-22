@@ -18,6 +18,10 @@ public class ProductListDTO {
         this.totalPrice = price.multiply(new BigDecimal(quantity));
     }
 
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     public String getName() {
         return name;
     }

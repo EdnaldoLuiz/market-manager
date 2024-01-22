@@ -19,7 +19,7 @@ public class MainPanel extends JPanel {
 
         ContentComponent contentComponent = new ContentComponent();  
         setLayout(new BorderLayout());
-        add(new SidebarComponent(contentComponent), BorderLayout.WEST); 
+        add(new SidebarComponent(contentComponent, employeerService), BorderLayout.WEST); 
         add(new HeaderComponent(employeerService), BorderLayout.NORTH);
         add(new FooterComponent(), BorderLayout.SOUTH);
         add(contentComponent, BorderLayout.CENTER);  

@@ -16,7 +16,6 @@ public interface ProductMapper {
     ProductRegisterDTO entityToRegisterDTO(Product entity);
 
     @Mapping(target = "category", ignore = true)
-    @Mapping(target = "image", ignore = true) 
     Product listToEntity(ProductListDTO dto);
 
     ProductListDTO entityToListDTO(Product employeer);
