@@ -4,8 +4,7 @@ public enum Category {
         
         FOOD("Alimentos"),
         CLEANING("Limpeza"),
-        OFFICE("Escritório"),
-        ALL("Todos");
+        OFFICE("Escritório");
     
         private String description;
     

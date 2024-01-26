@@ -74,7 +74,7 @@ public class Modal {
     }
 
     public static void showAdminDialog(Component parentComponent) {
-        ImageIcon adminIcon = createResizedIcon("src/main/resources/icons/cart.png", 100, 100);
+        ImageIcon adminIcon = createResizedIcon("src/main/resources/icons/admin.png", 100, 100);
         JLabel iconLabel = new JLabel(adminIcon);
         String adminMessage = "      Você está logado como administrador.";
         showCustomDialog(parentComponent, iconLabel, adminMessage, CustomColor.SUCESS_GREEN);

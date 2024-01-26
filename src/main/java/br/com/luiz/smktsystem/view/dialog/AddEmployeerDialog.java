@@ -1,25 +1,24 @@
 package br.com.luiz.smktsystem.view.dialog;
 
 import javax.swing.*;
-import br.com.luiz.smktsystem.app.enums.Category;
-import br.com.luiz.smktsystem.service.ProductService;
-import br.com.luiz.smktsystem.service.dto.ProductRegisterDTO;
+import br.com.luiz.smktsystem.app.enums.Role;
+import br.com.luiz.smktsystem.service.EmployeerService;
+import br.com.luiz.smktsystem.service.dto.EmployeerRegisterDTO;
 import br.com.luiz.smktsystem.utils.javax.CustomButton;
 import br.com.luiz.smktsystem.utils.javax.CustomColor;
 import br.com.luiz.smktsystem.utils.products.ResizeIcon;
 
 import java.awt.*;
-import java.math.BigDecimal;
 
-public class AddProductDialog extends JFrame {
+public class AddEmployeerDialog extends JFrame {
 
     private JTextField nameField;
-    private JTextField priceField;
-    private JTextField quantityField;
-    private JComboBox<String> categoryComboBox;
-    private ProductService service;
+    private JTextField emailField;
+    private JTextField cpfField;
+    private JComboBox<String> roleComboBox;
+    private EmployeerService service;
 
-    public AddProductDialog(ProductService service) {
+    public AddEmployeerDialog(EmployeerService service) {
         this.service = service;
         setLayout(new GridBagLayout());
 
@@ -29,7 +28,7 @@ public class AddProductDialog extends JFrame {
 
         Font font = new Font("Arial", Font.PLAIN, 18);
 
-        ImageIcon adminIcon = ResizeIcon.createResizedIcon("src/main/resources/icons/products.png", 80, 80);
+        ImageIcon adminIcon = ResizeIcon.createResizedIcon("src/main/resources/icons/employees.png", 80, 80);
         JLabel iconLabel = new JLabel(adminIcon);
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -39,25 +38,25 @@ public class AddProductDialog extends JFrame {
         constraints.gridwidth = 1;
 
         nameField = createField("Nome:", font, 1, constraints, 10);
-        priceField = createField("Preço:", font, 2, constraints, 10);
-        quantityField = createField("Quantidade:", font, 3, constraints, 10);
+        emailField = createField("Email:", font, 2, constraints, 10);
+        cpfField = createField("CPF:", font, 3, constraints, 10);
 
-        JLabel categoryLabel = new JLabel("Categoria:");
-        categoryLabel.setFont(font);
+        JLabel roleLabel = new JLabel("Cargo:         ");
+        roleLabel.setFont(font);
         constraints.gridx = 0;
         constraints.gridy = 4;
-        add(categoryLabel, constraints);
+        add(roleLabel, constraints);
 
-        categoryComboBox = new JComboBox<>();
-        categoryComboBox.setFont(font);
-        for (Category category : Category.values()) {
-            categoryComboBox.addItem(category.getDescription());
+        roleComboBox = new JComboBox<>();
+        roleComboBox.setFont(font);
+        for (Role role : Role.values()) {
+            roleComboBox.addItem(role.getDescription());
         }
         constraints.gridx = 1;
-        add(categoryComboBox, constraints);
+        add(roleComboBox, constraints);
 
         CustomButton addButton = new CustomButton("Adicionar", CustomColor.MAIN_RED, Color.WHITE, 100, 30, 18,
-                e -> addProduct());
+                e -> addEmployeer());
         constraints.gridx = 0;
         constraints.gridy = 5;
         constraints.gridwidth = 2;
@@ -85,17 +84,17 @@ public class AddProductDialog extends JFrame {
         return field;
     }
 
-    private void addProduct() {
+    private void addEmployeer() {
         String name = nameField.getText();
-        BigDecimal price = new BigDecimal(priceField.getText());
-        int quantity = Integer.parseInt(quantityField.getText());
-        Category category = Category.fromDescription((String) categoryComboBox.getSelectedItem());
+        String email = emailField.getText();
+        String cpf = cpfField.getText();
+        Role role = Role.fromDescription((String) roleComboBox.getSelectedItem());
 
-        ProductRegisterDTO registerDTO = new ProductRegisterDTO(name, price, quantity, category);
-        service.registerProduct(registerDTO);
+        EmployeerRegisterDTO registerDTO = new EmployeerRegisterDTO(name, email, cpf, role);
+        service.registerEmployeer(registerDTO);
         nameField.setText("");
-        priceField.setText("");
-        quantityField.setText("");
-        categoryComboBox.setSelectedIndex(0);
+        emailField.setText("");
+        cpfField.setText("");
+        roleComboBox.setSelectedIndex(0);
     }
 }

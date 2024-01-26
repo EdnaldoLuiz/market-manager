@@ -1,10 +1,13 @@
 package br.com.luiz.smktsystem.service.dto;
 
+import br.com.luiz.smktsystem.app.enums.Role;
+
 public class EmployeerListDTO {
 
     private String name;
     private String email;
     private String cpf;
+    private Role role;
 
     public EmployeerListDTO() {}
 
@@ -38,4 +41,11 @@ public class EmployeerListDTO {
         this.cpf = cpf;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

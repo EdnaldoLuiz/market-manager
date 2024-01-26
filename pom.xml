@@ -23,8 +23,14 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.5.6.Final</version>
+            <version>5.6.15.Final</version>
         </dependency>
+
+        <dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-lang3</artifactId>
+    <version>3.14.0</version>
+</dependency>
 
         <dependency>
             <groupId>org.mapstruct</groupId>

@@ -30,7 +30,7 @@ public class LoginPanel extends JFrame implements AuthenticationListener {
     }
 
     private void initComponents() {
-        setSize(900, 600);
+        setSize(800, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -48,7 +48,7 @@ public class LoginPanel extends JFrame implements AuthenticationListener {
 
     private JPanel buildLeftPanel() {
         JPanel leftPanel = new JPanel(new BorderLayout());
-        ImageIcon backgroundIcon = ResizeIcon.createResizedIcon("src/main/resources/imgs/auth-logo.jpg", 450, 600);
+        ImageIcon backgroundIcon = ResizeIcon.createResizedIcon("src/main/resources/imgs/auth-logo.jpg", 400, 500);
         JLabel backgroundLabel = new JLabel(backgroundIcon);
 
         leftPanel.add(backgroundLabel, BorderLayout.CENTER);
@@ -64,10 +64,10 @@ public class LoginPanel extends JFrame implements AuthenticationListener {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(5, 5, 5, 5);
 
-        Font labelFont = new Font("Arial", Font.BOLD, 18);
-        Font inputFont = new Font("Arial", Font.PLAIN, 16);
+        Font labelFont = new Font("Arial", Font.BOLD, 16);
+        Font inputFont = new Font("Arial", Font.PLAIN, 14);
 
-        ImageIcon loginIcon = ResizeIcon.createResizedIcon("src/main/resources/icons/login.png", 150, 150);
+        ImageIcon loginIcon = ResizeIcon.createResizedIcon("src/main/resources/icons/login.png", 100, 100);
         JLabel iconLabel = new JLabel(loginIcon);
 
         gbc.gridy++;
@@ -118,20 +118,20 @@ public class LoginPanel extends JFrame implements AuthenticationListener {
 
     private JTextField createTextField(int columns, Font font) {
         JTextField textField = new JTextField(columns);
-        textField.setPreferredSize(new Dimension(230, 30));
+        textField.setPreferredSize(new Dimension(200, 23));
         textField.setFont(font);
         return textField;
     }
 
     private JPasswordField createPasswordField(int columns, Font font) {
         JPasswordField passwordField = new JPasswordField(columns);
-        passwordField.setPreferredSize(new Dimension(230, 30));
+        passwordField.setPreferredSize(new Dimension(200, 23));
         passwordField.setFont(font);
         return passwordField;
     }
 
     private JButton createLoginButton() {
-        return new CustomButton("LOGIN", Color.RED, Color.WHITE, 250, 40, 20, e -> openMainView());
+        return new CustomButton("LOGIN", Color.RED, Color.WHITE, 200, 30, 18, e -> openMainView());
     }
 
     private JLabel createForgotPasswordLabel(Font font) {
@@ -165,7 +165,7 @@ public class LoginPanel extends JFrame implements AuthenticationListener {
 
         dispose();
         JFrame mainFrame = new JFrame();
-        mainFrame.setSize(1300, 900);
+        mainFrame.setSize(1100, 700);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setLocationRelativeTo(null);
         mainFrame.add(new MainPanel(employeerService));
@@ -179,7 +179,7 @@ public class LoginPanel extends JFrame implements AuthenticationListener {
 
     private void openResetPasswordView() {
         JFrame resetPasswordFrame = new JFrame();
-        resetPasswordFrame.setSize(500, 450);
+        resetPasswordFrame.setSize(400, 350);
         resetPasswordFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         resetPasswordFrame.setLocationRelativeTo(null);
         resetPasswordFrame.add(new ResetPasswordDialog(employeerService));

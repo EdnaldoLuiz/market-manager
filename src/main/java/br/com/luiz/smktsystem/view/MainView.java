@@ -11,7 +11,7 @@ public class MainView extends JFrame {
 
     public MainView(EmployeerService employeerService) {
         this.employeerService = employeerService;
-        setSize(1300, 900);
+        setSize(1000, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         add(new MainPanel(employeerService));

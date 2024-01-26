@@ -1,11 +1,21 @@
 package br.com.luiz.smktsystem.service.dto;
 
+import br.com.luiz.smktsystem.app.enums.Role;
+
 public class EmployeerRegisterDTO {
     
     private String name;
     private String email;
     private String cpf;
     private String password;
+    private Role role;
+
+    public EmployeerRegisterDTO(String name, String email, String cpf, Role role) {
+        this.name = name;
+        this.email = email;
+        this.cpf = cpf;
+        this.role = role;
+    }
 
     public String getName() {
         return name;
@@ -38,5 +48,4 @@ public class EmployeerRegisterDTO {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }

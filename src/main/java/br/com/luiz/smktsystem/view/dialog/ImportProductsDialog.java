@@ -1,7 +1,6 @@
 package br.com.luiz.smktsystem.view.dialog;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.regex.Matcher;
@@ -18,28 +17,10 @@ public class ImportProductsDialog extends JFrame {
 
     private ProductService service;
     private static final Pattern LINE_PATTERN = Pattern.compile("\\s*([\\p{L}\\s]+)\\s+R\\$\\s+(\\d+\\.\\d+)\\s+([\\p{L}\\s]+)\\s+(\\d+)\\s*");
+
     public ImportProductsDialog(ProductService service) {
         this.service = service;
-        setupUI();
-    }
-
-    private void setupUI() {
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        pack();
-        setLocationRelativeTo(null);
-        setSize(600, 400);
-
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(10, 10, 10, 10);
-
-        JButton importButton = new JButton("Importar Produtos");
-        importButton.setFont(new Font("Arial", Font.PLAIN, 18));
-        importButton.addActionListener(e -> importProducts());
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        add(importButton, gbc);
+        importProducts();
     }
 
     private void importProducts() {
@@ -60,6 +41,7 @@ public class ImportProductsDialog extends JFrame {
             for (int i = 3; i < lines.length - 1; i++) {
                 processLine(lines[i], i);
             }
+            dispose();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -95,9 +77,5 @@ public class ImportProductsDialog extends JFrame {
             default:
                 throw new IllegalArgumentException("Invalid category: " + description);
         }
-    }
-
-    private void logError(String message) {
-        System.err.println(message);
     }
 }

@@ -55,16 +55,5 @@ public class ProductService {
                 .map(product -> ProductMapper.INSTANCE.entityToListDTO(product))
                 .collect(Collectors.toList());
     }
-
-    public List<ProductListDTO> sortProducts(List<ProductListDTO> products, String order) {
-        products.sort((p1, p2) -> {
-            if (order.equals("Crescente")) {
-                return p1.getName().compareTo(p2.getName());
-            } else {
-                return p2.getName().compareTo(p1.getName());
-            }
-        });
-        return products;
-    }
 }
 
