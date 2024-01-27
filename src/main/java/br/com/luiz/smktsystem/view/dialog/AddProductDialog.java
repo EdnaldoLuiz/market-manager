@@ -7,6 +7,7 @@ import br.com.luiz.smktsystem.service.dto.ProductRegisterDTO;
 import br.com.luiz.smktsystem.utils.javax.CustomButton;
 import br.com.luiz.smktsystem.utils.javax.CustomColor;
 import br.com.luiz.smktsystem.utils.products.ResizeIcon;
+import br.com.luiz.smktsystem.view.panel.ProductsPanel;
 
 import java.awt.*;
 import java.math.BigDecimal;
@@ -18,9 +19,11 @@ public class AddProductDialog extends JFrame {
     private JTextField quantityField;
     private JComboBox<String> categoryComboBox;
     private ProductService service;
+    private ProductsPanel panel;
 
-    public AddProductDialog(ProductService service) {
+    public AddProductDialog(ProductService service, ProductsPanel panel) {
         this.service = service;
+        this.panel = panel;
         setLayout(new GridBagLayout());
 
         GridBagConstraints constraints = new GridBagConstraints();
@@ -97,5 +100,7 @@ public class AddProductDialog extends JFrame {
         priceField.setText("");
         quantityField.setText("");
         categoryComboBox.setSelectedIndex(0);
+        panel.updateProductData();
+        this.dispose();
     }
 }

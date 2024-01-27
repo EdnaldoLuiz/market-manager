@@ -3,10 +3,13 @@ package br.com.luiz.smktsystem.app.model;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import br.com.luiz.smktsystem.app.enums.Role;
+import br.com.luiz.smktsystem.service.dto.EmployeerRegisterDTO;
 
 @Entity
 public class Employeer {
@@ -18,16 +21,17 @@ public class Employeer {
   private String email;
   private String cpf;
   private String password;
+
+  @Enumerated(EnumType.STRING)
   private Role role;
 
   public Employeer() {}
 
-  public Employeer(String name, String email, String cpf, String password) {
-    this.name = name;
-    this.email = email;
-    this.cpf = cpf;
-    this.password = password;
-    this.role = Role.EMPLOYEE;
+  public Employeer(EmployeerRegisterDTO dto) {
+    this.name = dto.getName();
+    this.email = dto.getEmail();
+    this.cpf = dto.getCpf();
+    this.password = dto.getPassword();
   }
 
   public String getName() {

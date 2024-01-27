@@ -7,7 +7,6 @@ import br.com.luiz.smktsystem.app.model.Employeer;
 import br.com.luiz.smktsystem.service.dao.EmployeerDAO;
 import br.com.luiz.smktsystem.service.dto.EmployeerListDTO;
 import br.com.luiz.smktsystem.service.dto.EmployeerLoginDTO;
-import br.com.luiz.smktsystem.service.dto.EmployeerRegisterDTO;
 import br.com.luiz.smktsystem.service.mapper.EmployeerMapper;
 
 public class EmployeerService {
@@ -19,14 +18,12 @@ public class EmployeerService {
         this.employeerDAO = employeerDAO;
     }
 
-    public void registerEmployeer(EmployeerRegisterDTO registerDTO) {
-        Employeer employeer = EmployeerMapper.INSTANCE.registerToEntity(registerDTO);
+    public void registerEmployeer(Employeer employeer) {
         employeerDAO.createEmployeer(employeer);
     }
 
     public List<EmployeerListDTO> listEmployeers() {
-        List<Employeer> employeers = employeerDAO.getAllEmployeers();
-        return employeers.stream()
+        return employeerDAO.getAllEmployeers().stream()
                 .map(employeer -> EmployeerMapper.INSTANCE.entityToListDTO(employeer))
                 .collect(Collectors.toList());
     }

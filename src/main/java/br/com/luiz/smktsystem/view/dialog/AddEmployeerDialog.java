@@ -2,11 +2,13 @@ package br.com.luiz.smktsystem.view.dialog;
 
 import javax.swing.*;
 import br.com.luiz.smktsystem.app.enums.Role;
+import br.com.luiz.smktsystem.app.model.Employeer;
 import br.com.luiz.smktsystem.service.EmployeerService;
 import br.com.luiz.smktsystem.service.dto.EmployeerRegisterDTO;
 import br.com.luiz.smktsystem.utils.javax.CustomButton;
 import br.com.luiz.smktsystem.utils.javax.CustomColor;
 import br.com.luiz.smktsystem.utils.products.ResizeIcon;
+import br.com.luiz.smktsystem.view.panel.EmployeesPanel;
 
 import java.awt.*;
 
@@ -17,9 +19,11 @@ public class AddEmployeerDialog extends JFrame {
     private JTextField cpfField;
     private JComboBox<String> roleComboBox;
     private EmployeerService service;
+    private EmployeesPanel panel;
 
-    public AddEmployeerDialog(EmployeerService service) {
+    public AddEmployeerDialog(EmployeerService service, EmployeesPanel panel) {
         this.service = service;
+        this.panel = panel;
         setLayout(new GridBagLayout());
 
         GridBagConstraints constraints = new GridBagConstraints();
@@ -69,7 +73,8 @@ public class AddEmployeerDialog extends JFrame {
         setLocation(x, y);
     }
 
-    private JTextField createField(String labelText, Font font, int gridy, GridBagConstraints constraints, int columns) {
+    private JTextField createField(String labelText, Font font, int gridy, GridBagConstraints constraints,
+            int columns) {
         JLabel label = new JLabel(labelText);
         label.setFont(font);
         constraints.gridx = 0;
@@ -88,13 +93,22 @@ public class AddEmployeerDialog extends JFrame {
         String name = nameField.getText();
         String email = emailField.getText();
         String cpf = cpfField.getText();
-        Role role = Role.fromDescription((String) roleComboBox.getSelectedItem());
+        String selectedRoleDescription = (String) roleComboBox.getSelectedItem();
+
+        Role role;
+        if ("Admin".equals(selectedRoleDescription)) {
+            role = Role.ADMIN;
+        } else {
+            role = Role.EMPLOYEE;
+        }
 
         EmployeerRegisterDTO registerDTO = new EmployeerRegisterDTO(name, email, cpf, role);
-        service.registerEmployeer(registerDTO);
+        service.registerEmployeer(new Employeer(registerDTO));
         nameField.setText("");
         emailField.setText("");
         cpfField.setText("");
         roleComboBox.setSelectedIndex(0);
+        panel.updateEmployeeData();
+        this.dispose();
     }
 }

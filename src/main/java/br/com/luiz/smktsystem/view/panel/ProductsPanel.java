@@ -91,7 +91,6 @@ public class ProductsPanel extends JPanel {
                 String selectedOrder = (String) ((JComboBox<String>) createOrderComboBox()).getSelectedItem();
                 sortProductList(selectedOrder);
                 loadProductData(productList);
-                ((JComboBox<String>) createOrderComboBox()).setSelectedItem(selectedOrder);
             }
         });
 
@@ -125,7 +124,7 @@ public class ProductsPanel extends JPanel {
     private JButton createButton(String text) {
         JButton button = new CustomButton(text, CustomColor.MAIN_RED, Color.WHITE, 200, 40, FONT_SIZE, e -> {
             if (text.equals("Adicionar Produto")) {
-                AddProductDialog dialog = new AddProductDialog(service);
+                AddProductDialog dialog = new AddProductDialog(service, this);
                 dialog.pack();
                 dialog.setVisible(true);
             } else if (text.equals("Importar Produtos")) {
@@ -191,6 +190,10 @@ public class ProductsPanel extends JPanel {
         });
 
         return model;
+    }
+
+    public void updateProductData() {
+        loadProductData(productList);
     }
 
     private void updateProductPrice(ProductListDTO product, Object newData, int row, DefaultTableModel model,

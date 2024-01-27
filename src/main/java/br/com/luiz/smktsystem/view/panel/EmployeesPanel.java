@@ -37,10 +37,10 @@ public class EmployeesPanel extends JPanel {
         JButton excluir = createButton("Excluir Funcionário", CustomColor.MAIN_RED, Color.WHITE, 200, 40, FONT_SIZE);
         JButton adicionar = createButton("Registrar Funcionário", CustomColor.MAIN_RED, Color.WHITE, 200, 40,
                 FONT_SIZE);
-        adicionar.addActionListener(e -> {
-            AddEmployeerDialog dialog = new AddEmployeerDialog(employeerService);
-            dialog.setVisible(true);
-        });
+                adicionar.addActionListener(e -> {
+                    AddEmployeerDialog dialog = new AddEmployeerDialog(employeerService, this);
+                    dialog.setVisible(true);
+                });
         buttonPanel.add(adicionar);
         buttonPanel.add(excluir);
 
@@ -66,20 +66,25 @@ public class EmployeesPanel extends JPanel {
         return new CustomButton(text, backgroundColor, textColor, width, height, fontSize);
     }
 
-    private void loadEmployeeData() {
-        List<EmployeerListDTO> employeeList = employeerService.listEmployeers();
+    public void updateEmployeeData() {
+        loadEmployeeData();
+    }
 
+    public void loadEmployeeData() {
+        List<EmployeerListDTO> employeeList = employeerService.listEmployeers();
+    
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Nome");
         model.addColumn("Email");
         model.addColumn("CPF");
         model.addColumn("Cargo");
-
+    
         for (EmployeerListDTO employee : employeeList) {
+            String roleDescription = employee.getRole() != null ? employee.getRole().getDescription() : "Funcionário";
             model.addRow(new Object[] { employee.getName(), employee.getEmail(), formatCPF(employee.getCpf()),
-                    employee.getRole().getDescription() });
+                    roleDescription });
         }
-
+    
         employeesTable.setModel(model);
         employeesTable.setFont(new Font(FONT_NAME, Font.PLAIN, 16));
         employeesTable.setRowHeight(35);

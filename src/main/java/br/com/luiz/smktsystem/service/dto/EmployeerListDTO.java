@@ -11,10 +11,11 @@ public class EmployeerListDTO {
 
     public EmployeerListDTO() {}
 
-    public EmployeerListDTO(String name, String email, String cpf) {
+    public EmployeerListDTO(String name, String email, String cpf, Role role) {
         this.name = name;
         this.email = email;
         this.cpf = cpf;
+        this.role = role;
     }
 
     public String getName() {

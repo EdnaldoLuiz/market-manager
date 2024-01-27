@@ -1,7 +1,6 @@
 package br.com.luiz.smktsystem.service;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import br.com.luiz.smktsystem.app.enums.Category;

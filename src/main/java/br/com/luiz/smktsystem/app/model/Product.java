@@ -6,9 +6,6 @@ import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
-
-import org.hibernate.annotations.Type;
 
 import br.com.luiz.smktsystem.app.enums.Category;
 import br.com.luiz.smktsystem.service.dto.ProductRegisterDTO;
@@ -24,10 +21,6 @@ public class Product {
     private Integer quantity;
     private Category category;
     private BigDecimal totalPrice;
-
-    @Lob
-    @Type(type="org.hibernate.type.BinaryType")
-    private byte[] image;
 
     public Product() {}
 
