@@ -48,7 +48,7 @@ public class LoginPanel extends JFrame implements AuthenticationListener {
 
     private JPanel buildLeftPanel() {
         JPanel leftPanel = new JPanel(new BorderLayout());
-        ImageIcon backgroundIcon = ResizeIcon.createResizedIcon("src/main/resources/imgs/auth-logo.jpg", 400, 500);
+        ImageIcon backgroundIcon = ResizeIcon.createResizedIcon("/icons/auth-logo.jpg", 400, 500);
         JLabel backgroundLabel = new JLabel(backgroundIcon);
 
         leftPanel.add(backgroundLabel, BorderLayout.CENTER);
@@ -66,8 +66,7 @@ public class LoginPanel extends JFrame implements AuthenticationListener {
 
         Font labelFont = new Font("Arial", Font.BOLD, 16);
         Font inputFont = new Font("Arial", Font.PLAIN, 14);
-
-        ImageIcon loginIcon = ResizeIcon.createResizedIcon("src/main/resources/icons/login.png", 100, 100);
+        ImageIcon loginIcon = ResizeIcon.createResizedIcon("/icons/login.png", 120, 120);
         JLabel iconLabel = new JLabel(loginIcon);
 
         gbc.gridy++;

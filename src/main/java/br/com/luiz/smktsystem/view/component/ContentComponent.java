@@ -10,14 +10,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import com.google.protobuf.Empty;
 
 import br.com.luiz.smktsystem.service.EmployeerService;
 import br.com.luiz.smktsystem.service.ProductService;
 import br.com.luiz.smktsystem.service.dao.EmployeerDAO;
 import br.com.luiz.smktsystem.service.dao.ProductDAO;
 import br.com.luiz.smktsystem.utils.hibernate.JpaUtil;
-import br.com.luiz.smktsystem.utils.javax.CustomColor;
 import br.com.luiz.smktsystem.utils.products.ResizeIcon;
 import br.com.luiz.smktsystem.view.panel.EmployeesPanel;
 import br.com.luiz.smktsystem.view.panel.ProductsPanel;
@@ -35,7 +33,7 @@ public class ContentComponent extends JPanel {
         scrollPane = new JScrollPane();
         add(scrollPane, BorderLayout.CENTER);
 
-        ImageIcon addIcon = ResizeIcon.createResizedIcon("src/main/resources/icons/add-product.png", 50, 50);
+        ImageIcon addIcon = ResizeIcon.createResizedIcon("/icons/add-product.png", 50, 50);
         JButton addButton = new JButton(addIcon);
         addButton.setPreferredSize(new Dimension(40, 40));
         addButton.setBackground(Color.RED);

@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.border.EmptyBorder;
 
 import br.com.luiz.smktsystem.app.enums.Role;
@@ -28,14 +29,14 @@ public class SidebarComponent extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JPanel mercadoriasOption = createOption("Mercadorias",
-                ResizeIcon.createResizedIcon("src/main/resources/icons/market.png", 30, 30));
+                ResizeIcon.createResizedIcon("/icons/market.png", 30, 30));
         add(mercadoriasOption);
         selectOption(mercadoriasOption);
 
         Employeer authenticatedUser = employeerService.getAuthenticatedUser(); 
         if (authenticatedUser.getRole() == Role.ADMIN) { 
             add(createOption("Funcionarios",
-                    ResizeIcon.createResizedIcon("src/main/resources/icons/employee.png", 30, 30)));
+                    ResizeIcon.createResizedIcon("/icons/employee.png", 30, 30)));
         }
     }
 

@@ -32,7 +32,7 @@ public class AddProductDialog extends JFrame {
 
         Font font = new Font("Arial", Font.PLAIN, 18);
 
-        ImageIcon adminIcon = ResizeIcon.createResizedIcon("src/main/resources/icons/products.png", 80, 80);
+        ImageIcon adminIcon = ResizeIcon.createResizedIcon("/icons/products.png", 80, 80);
         JLabel iconLabel = new JLabel(adminIcon);
         constraints.gridx = 0;
         constraints.gridy = 0;

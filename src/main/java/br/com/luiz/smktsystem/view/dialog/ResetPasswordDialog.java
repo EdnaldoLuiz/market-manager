@@ -36,7 +36,7 @@ public class ResetPasswordDialog extends JPanel {
         gbc.gridwidth = 2;
         add(titleLabel, gbc);
 
-        ImageIcon originalIcon = ResizeIcon.createResizedIcon("src/main/resources/icons/forgot-password.png", 80, 80);
+        ImageIcon originalIcon = ResizeIcon.createResizedIcon("/icons/forgot-password.png", 80, 80);
         JLabel iconLabel = new JLabel(originalIcon);
 
         JPanel iconPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));

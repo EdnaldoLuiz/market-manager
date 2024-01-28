@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 
 import br.com.luiz.smktsystem.service.EmployeerService;
 import br.com.luiz.smktsystem.utils.javax.CustomColor;
+import br.com.luiz.smktsystem.utils.products.ResizeIcon;
 import br.com.luiz.smktsystem.view.panel.LoginPanel;
 
 public class HeaderComponent extends JPanel {
@@ -20,20 +21,12 @@ public class HeaderComponent extends JPanel {
 
         setLayout(new BorderLayout());
 
-        ImageIcon originalIcon = new ImageIcon("src/main/resources/icons/market-manager-logo.png");
-        Image originalImage = originalIcon.getImage();
-        Image scaledImage = originalImage.getScaledInstance(250, 80, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-
+        ImageIcon scaledIcon = ResizeIcon.createResizedIcon("/icons/market-manager-logo.png", 250, 80);
         JLabel logoLabel = new JLabel(scaledIcon);
         logoLabel.setBorder(BorderFactory.createEmptyBorder(0, 30, 0, 0));
         add(logoLabel, BorderLayout.WEST);
 
-        ImageIcon originalIconRight = new ImageIcon("src/main/resources/icons/logout.png");
-        Image originalImageRight = originalIconRight.getImage();
-        Image scaledImageRight = originalImageRight.getScaledInstance(45, 45, Image.SCALE_SMOOTH);
-        ImageIcon scaledIconRight = new ImageIcon(scaledImageRight);
-
+        ImageIcon scaledIconRight = ResizeIcon.createResizedIcon("/icons/logout.png", 45, 45);
         JLabel logoLabelRight = new JLabel(scaledIconRight);
         logoLabelRight.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 30));
         logoLabelRight.addMouseListener(new MouseAdapter() {

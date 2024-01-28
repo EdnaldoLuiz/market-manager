@@ -6,22 +6,23 @@ import br.com.luiz.smktsystem.utils.javax.CustomColor;
 import br.com.luiz.smktsystem.utils.products.ResizeIcon;
 
 import java.awt.*;
+import java.net.URL;
 
 public class Modal {
 
-    private static ImageIcon createResizedIcon(String path, int width, int height) {
-        return ResizeIcon.createResizedIcon(path, width, height);
+    private static ImageIcon createResizedIcon(String url, int width, int height) {
+        return ResizeIcon.createResizedIcon(url, width, height);
     }
 
     public static void showSuccessDialog(Component parentComponent) {
-        ImageIcon successIcon = createResizedIcon("src/main/resources/icons/success.png", 100, 100);
+        ImageIcon successIcon = createResizedIcon("/icons/success.png", 100, 100);
         JLabel iconLabel = new JLabel(successIcon);
         String successMessage = "Um código para redefinição de senha será enviado. Verifique sua caixa de e-mail.";
         showCustomDialog(parentComponent, iconLabel, successMessage, CustomColor.SUCESS_GREEN);
     }
 
     public static void showErrorDialog(Component parentComponent, String errorMessage) {
-        ImageIcon errorIcon = createResizedIcon("src/main/resources/icons/error.png", 100, 100);
+        ImageIcon errorIcon = createResizedIcon("/icons/error.png", 100, 100);
         JLabel iconLabel = new JLabel(errorIcon);
         showCustomDialog(parentComponent, iconLabel, errorMessage, Color.RED);
     }
@@ -74,9 +75,9 @@ public class Modal {
     }
 
     public static void showAdminDialog(Component parentComponent) {
-        ImageIcon adminIcon = createResizedIcon("src/main/resources/icons/admin.png", 100, 100);
+        ImageIcon adminIcon = createResizedIcon("/icons/admin.png", 100, 100);
         JLabel iconLabel = new JLabel(adminIcon);
         String adminMessage = "      Você está logado como administrador.";
-        showCustomDialog(parentComponent, iconLabel, adminMessage, CustomColor.SUCESS_GREEN);
+        showCustomDialog(parentComponent, iconLabel, adminMessage, CustomColor.MAIN_RED);
     }
 }
