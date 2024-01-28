@@ -5,7 +5,12 @@
 
 <h1>📚 Índice </h1>
 <ol>
-    <li><a href="#front-end">Front-end</a></li>
+    <li><a href="#tela-de-registro">Tela de Registro</a></li>
+    <li><a href="#tela-esqueceu-a-senha">Tela de Esqueceu a Senha</a></li>
+    <li><a href="#tela-funcionarios">Tela de Funcionários</a></li>
+    <li><a href="#tela-produtos">Tela de Produtos</a></li>
+    <li><a href="#tela-registrar-produtos">Tela de Registrar Produtos</a></li>
+    <li><a href="#tela-registrar-funcionarios">Tela de Registrar Funcionários</a></li>
     <li><a href="#executar-o-projeto">Executar o Projeto</a></li>
     <li><a href="#tecnologias-utilizadas">Tecnologias Utilizadas</a></li>
 </ol>
@@ -67,34 +72,27 @@
 - **Importar Produtos:** Clicando em "Importar Produtos", é possível realizar a importação de produtos para o sistema. Esta funcionalidade facilita a inclusão em massa de novos itens.
 - **Ordenar e Filtrar:** É possível selecionar a categoria desejada e ordenar os produtos por preço em ordem crescente ou decrescente, utilizando os menus suspensos correspondentes.
 
-<div>
-    <div>
-        <h2>📝 Tela de Registrar Produtos</h2>
-        <div align=center>
-          <img src="https://github.com/EdnaldoLuiz/market-manager/assets/112354693/f152974f-daba-4e48-a40b-70fb5a704f20">
-        </div>
-        <br>
-        <ul>
-            <li><b>Campos de Entrada:</b> Nome, preço, quantidade e categoria do produto.</li>
-            <li><b>Botão de Adicionar:</b> Inclui o novo produto na tabela de produtos.</li>
-            <li><b>Interface Intuitiva:</b> Design amigável para facilitar o registro de produtos.</li>
-        </ul>
-    </div>
-    <div>
-        <h2>📝 Tela de Registrar Funcionários </h2>
-        <div align=center>
-          <img align=center src="https://github.com/EdnaldoLuiz/market-manager/assets/112354693/0d79223a-b683-45c0-b3bd-260448fd171d">
-        </div>
-        <br>
-        <ul>
-            <li><b>Campos de Entrada:</b> Nome, e-mail, CPF e cargo do funcionário.</li>
-            <li><b>Botão de Adicionar:</b> Inclui o novo funcionário na tabela de funcionários.</li>
-            <li><b>Escolha de Cargo:</b> Admin ou Funcionário, selecionados através de uma lista suspensa.</li>
-        </ul>
-    </div>
+<h2 id="tela-registrar-produtos">📝 Tela de Registrar Produtos</h2>
+<div align=center>
+    <img src="https://github.com/EdnaldoLuiz/market-manager/assets/112354693/f152974f-daba-4e48-a40b-70fb5a704f20">
 </div>
+<br>
 
-<h2>▶️ Executar o Projeto</h2>
+- **Campos de Entrada:** Nome, preço, quantidade e categoria do produto.
+- **Botão de Adicionar:** Inclui o novo produto na tabela de produtos.
+- **Interface Intuitiva:** Design amigável para facilitar o registro de produtos.
+
+<h2 id="tela-registrar-funcionarios">📝 Tela de Registrar Funcionários </h2>
+<div align=center>
+    <img align=center src="https://github.com/EdnaldoLuiz/market-manager/assets/112354693/0d79223a-b683-45c0-b3bd-260448fd171d">
+</div>
+<br>
+
+- **Campos de Entrada:** Nome, e-mail, CPF e cargo do funcionário.
+- **Botão de Adicionar:** Inclui o novo funcionário na tabela de funcionários.
+- **Escolha de Cargo:** Admin ou Funcionário, selecionados através de uma lista suspensa.
+
+<h2 id="executar-o-projeto">▶️ Executar o Projeto</h2>
 
 ```bash
 git clone https://github.com/EdnaldoLuiz/market-manager.git
@@ -103,7 +101,7 @@ cd market-manager
 
 > Obs: Precisa ter o JDK instalado e abra em uma IDE Java de sua escolha. Ou você pode executar o market-manager-app.jar disponível 
 
-<h2>🛠️ Tecnologias Utilizadas:</h2> 
+<h2 id="tecnologias-utilizadas">🛠️ Tecnologias Utilizadas:</h2> 
 
 <table align="center" width=1000px>
     <thead>
@@ -129,4 +127,3 @@ cd market-manager
         </tr>
     </tbody>
 </table>
-
