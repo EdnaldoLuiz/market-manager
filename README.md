@@ -68,9 +68,13 @@
 
 <br>
 
-- **Adicionar Produto:** Ao clicar em "Adicionar Produto", é aberto um formulário para inserir informações do novo produto, como nome, preço, quantidade e categoria. Após a adição, a tabela é atualizada automaticamente.
-- **Importar Produtos:** Clicando em "Importar Produtos", é possível realizar a importação de produtos para o sistema. Esta funcionalidade facilita a inclusão em massa de novos itens.
 - **Ordenar e Filtrar:** É possível selecionar a categoria desejada e ordenar os produtos por preço em ordem crescente ou decrescente, utilizando os menus suspensos correspondentes.
+- **Adicionar Produto:** Ao clicar em "Adicionar Produto", é aberto um formulário para inserir informações do novo produto, como nome, preço, quantidade e categoria. Após a adição, a tabela é atualizada automaticamente.
+- **Importar Produtos:** Clicando em "Importar Produtos", é possível realizar a importação de produtos para o sistema lendo os dados de um PDF.
+
+<div align=center>
+    <img width=400px src="https://github.com/EdnaldoLuiz/market-manager/assets/112354693/86e8672c-8205-45b5-9be6-efa6b4f21abe">
+</div>
 
 <h2 id="tela-registrar-produtos">📝 Tela de Registrar Produtos</h2>
 <div align=center>
