@@ -6,8 +6,8 @@
 <h1>📚 Índice </h1>
 <ol>
     <li><a href="#front-end">Front-end</a></li>
-    <li><a href="#clonar-repositorio">Executar o Projeto</a></li>
-    <li><a href="#tech-stack">Tecnologias Utilizadas</a></li>
+    <li><a href="#executar-o-projeto">Executar o Projeto</a></li>
+    <li><a href="#tecnologias-utilizadas">Tecnologias Utilizadas</a></li>
 </ol>
 
 <h2 id="tela-de-registro">✏️ Tela de Registro </h2>
@@ -93,6 +93,15 @@
         </ul>
     </div>
 </div>
+
+<h2>▶️ Executar o Projeto</h2>
+
+```bash
+git clone https://github.com/EdnaldoLuiz/market-manager.git
+cd market-manager
+```
+
+> Obs: Precisa ter o JDK instalado e abra em uma IDE Java de sua escolha. Ou você pode executar o market-manager-app.jar disponível 
 
 <h2>🛠️ Tecnologias Utilizadas:</h2> 
 
