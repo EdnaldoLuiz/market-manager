@@ -12,6 +12,7 @@
     <li><a href="#tela-registrar-produtos">Tela de Registrar Produtos</a></li>
     <li><a href="#tela-registrar-funcionarios">Tela de Registrar Funcionários</a></li>
     <li><a href="#executar-o-projeto">Executar o Projeto</a></li>
+    <li><a href="#principais-bibliotecas">Principais Bibliotecas</a></li>
     <li><a href="#tecnologias-utilizadas">Tecnologias Utilizadas</a></li>
 </ol>
 
@@ -104,6 +105,51 @@ cd market-manager
 ```
 
 > Obs: Precisa ter o JDK instalado e abra em uma IDE Java de sua escolha. Ou você pode executar o market-manager-app.jar disponível 
+
+<h2 id="principais-bibliotecas">📚 Principais Bibliotecas:</h2> 
+
+<p> Biblioteca do Hibernate usada para a criação das tabelas e relação com o banco de dados SQL </p>
+
+```xml
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-core</artifactId>
+    <version>5.6.15.Final</version>
+</dependency>
+```
+
+<p> Biblioteca do Apache PDFBox usada para leitura de arquivos PDFs e adicionar os produtos ao banco de dados </p>
+
+```xml
+<dependency>
+    <groupId>org.apache.pdfbox</groupId>
+    <artifactId>pdfbox</artifactId>
+    <version>2.0.24</version>
+</dependency>
+
+<dependency>
+    <groupId>org.apache.pdfbox</groupId>
+    <artifactId>fontbox</artifactId>
+    <version>2.0.24</version>
+</dependency>
+```
+
+<p> Biblioteca Mapstruct para criamento dos mappers usada para o mapeamento entre as entidades e os DTOs </p>
+
+```xml
+<dependency>
+    <groupId>org.mapstruct</groupId>
+    <artifactId>mapstruct</artifactId>
+    <version>1.4.2.Final</version>
+</dependency>
+
+<dependency>
+    <groupId>org.mapstruct</groupId>
+    <artifactId>mapstruct-processor</artifactId>
+    <version>1.4.2.Final</version>
+    <scope>provided</scope>
+</dependency>
+```
 
 <h2 id="tecnologias-utilizadas">🛠️ Tecnologias Utilizadas:</h2> 
 
